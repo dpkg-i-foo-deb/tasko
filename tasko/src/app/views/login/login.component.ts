@@ -4,6 +4,9 @@ import {FormGroup,FormControl,Validators} from '@angular/forms'
 
 import {User} from '../../models/user'
 
+import {Api} from '../../api/api'
+import { UrlSerializer } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,12 +19,25 @@ export class LoginComponent implements OnInit {
     password : new FormControl ('',Validators.required)
   })
 
-  constructor() { }
+  constructor(private api:Api) { }
 
   ngOnInit(): void {
   }
 
   login(){
+    let user : User = {
+      email:'',
+      password:'',
+    };
+
+    if(this.loginForm.valid)
+    {
+      user.email=this.loginForm.controls['email'].value ?? '';
+      user.password=this.loginForm.controls['password'].value ?? '';
+
+      this.api.login(user)
+    }
+
     
   }
 
