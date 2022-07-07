@@ -8,6 +8,7 @@ import { SignupComponent } from './views/signup/signup.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 
 import {ReactiveFormsModule,FormsModule} from '@angular/forms'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {ReactiveFormsModule,FormsModule} from '@angular/forms'
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
