@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { HotToastService, ToastPersistConfig } from '@ngneat/hot-toast'
 
 
 import {FormGroup,FormControl,Validators} from '@angular/forms'
@@ -7,6 +7,9 @@ import {FormGroup,FormControl,Validators} from '@angular/forms'
 import {User} from '../../models/user'
 
 import {Api} from '../../api/api'
+import { HttpErrorResponse } from '@angular/common/http';
+import { LoginResponse } from 'src/app/models/response';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +23,11 @@ export class LoginComponent implements OnInit {
     password : new FormControl ('',[Validators.required,Validators.minLength(4)])
   })
 
-  constructor(private api:Api) { }
+  constructor(
+    private api:Api,
+    private toast: HotToastService,
+    private router:Router
+    ) { }
 
   ngOnInit(): void {
   }
@@ -40,10 +47,47 @@ export class LoginComponent implements OnInit {
     user.email=this.loginForm.controls['email'].value ?? '';
     user.password=this.loginForm.controls['password'].value ?? '';
 
-    this.api.login(user).subscribe(data=>{
-      console.log(data)
-    });
-  
+    this.api.login(user).pipe(
+      this.toast.observe({
+        success:'Logged in Successfully!',
+        loading:'Logging in...',
+        error: 'Something Went Wrong. Try Again!'
+      })
+    ).subscribe(      
+      {
+        next : () => {
+          //TODO what the heck do I do here?
+        },
+
+        error: (error:HttpErrorResponse) => {
+
+          //401 = Username or password incorrect
+          if(error.status == 401)
+          {
+            this.toast.show(
+              "Username or Password Incorrect!",
+            )
+          }
+          //Other stuff means backend is not running
+          else
+          {
+            this.toast.show(
+              "Cannot Connect to Backend! Is it Running?"
+            ),
+            {
+              duration : 15,
+              autoClose:false,
+              dismissible: true,
+            }
+          }
+        },
+
+        complete: () => {
+          //TODO navigate somewhere
+          this.router.navigate(['']);
+        }
+      }
+    );
     
   }
 

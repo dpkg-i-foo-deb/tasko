@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
 
 import {User} from '../models/user'
 import {Observable} from 'rxjs'
-import { response } from '../models/response';
+import { LoginResponse } from '../models/response';
 
 @Injectable({
     providedIn: 'root'
@@ -17,13 +17,12 @@ export class Api {
 
     constructor (private http:HttpClient) {}
 
-    login(user:User) :Observable<response> {
+    login(user:User) :Observable<LoginResponse> {
 
         let fullPath = this.url+this.loginPath;
-        
-        //return this.http.post<response>('/api/login',user)
 
-        return this.http.post<response>('http://localhost:3000/login',user)
+        return this.http.post<LoginResponse>('http://localhost:3000/login',user)
+
     }
 
 }

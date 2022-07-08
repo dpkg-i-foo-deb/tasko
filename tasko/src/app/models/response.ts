@@ -1,4 +1,3 @@
-export interface response {
-    status:number;
+export interface LoginResponse {
     response:string;
 }
