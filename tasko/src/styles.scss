@@ -19,6 +19,7 @@
 $custom-typography: mat-typography-config(
   $font-family: 'LieraSansLight'
 );
+
 @include mat-core($custom-typography);
 
 html, body { height: 100%; }
