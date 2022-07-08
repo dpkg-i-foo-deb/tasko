@@ -26,20 +26,24 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
+
+    if (!this.loginForm.valid)
+    {
+      return
+    }
+
     let user : User = {
       email:'',
       password:'',
     };
 
-    if(this.loginForm.valid)
-    {
-      user.email=this.loginForm.controls['email'].value ?? '';
-      user.password=this.loginForm.controls['password'].value ?? '';
+    user.email=this.loginForm.controls['email'].value ?? '';
+    user.password=this.loginForm.controls['password'].value ?? '';
 
-      this.api.login(user).subscribe(data=>{
-        console.log(data)
-      });
-    }
+    this.api.login(user).subscribe(data=>{
+      console.log(data)
+    });
+  
     
   }
 
