@@ -16,8 +16,8 @@ import {Api} from '../../api/api'
 export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
-    email : new FormControl('',Validators.required),
-    password : new FormControl ('',Validators.required)
+    email : new FormControl('',[Validators.required, Validators.email]),
+    password : new FormControl ('',[Validators.required,Validators.minLength(4)])
   })
 
   constructor(private api:Api) { }
@@ -38,10 +38,17 @@ export class LoginComponent implements OnInit {
 
       this.api.login(user).subscribe(data=>{
         console.log(data)
-      })
+      });
     }
-
     
+  }
+
+  get email(){
+    return this.loginForm.get('email');
+  }
+
+  get password(){
+    return this.loginForm.get('password');
   }
 
 }
