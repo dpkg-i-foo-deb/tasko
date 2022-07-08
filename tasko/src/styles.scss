@@ -1,0 +1,25 @@
+
+
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+
+@font-face {
+    font-family: LieraSans;
+    src: url('assets/fonts/LieraSans-Regular.ttf');
+}
+
+@font-face {
+    font-family: LieraSansLight;
+    src: url('assets/fonts/LieraSans-Light.ttf');
+}
+/* You can add global styles to this file, and also import other style files */
+
+* {
+    font-family: LieraSansLight /* Replace with your custom font */, sans-serif !important; 
+    /* Add !important to overwrite all elements */
+  }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: LieraSans}
