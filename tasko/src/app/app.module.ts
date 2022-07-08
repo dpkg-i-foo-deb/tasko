@@ -9,6 +9,10 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
 
 import {ReactiveFormsModule,FormsModule} from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatFormFieldModule} from '@angular/material/form-field'
+import {MatInputModule} from '@angular/material/input'
+import {MatButtonModule} from '@angular/material/button'
 
 @NgModule({
   declarations: [
@@ -23,7 +27,12 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
   ],
+
   providers: [],
   bootstrap: [AppComponent]
 })

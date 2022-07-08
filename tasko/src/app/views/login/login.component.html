@@ -1,27 +1,24 @@
-<div class="form-container">
+<div class="form-container mat-elevation-z5">
     <form [formGroup]="loginForm" (ngSubmit)="login()">
-        <h2>Login to your account</h2>
+        <h1>Login to Your Account</h1>
     
-        <div class="input-parent">
-          <label>Email</label>
-          <input formControlName="email" type="text">
-        </div>
+        <mat-form-field>
+          <input matInput placeholder="Email Address" formControlName="email" />
+        </mat-form-field>
     
-        <div class="input-parent">
-          <label>Password</label>
-          <input formControlName="password" type="password">
-        </div>
+        <mat-form-field>
+          <input matInput placeholder="Password" formControlName="password" type="password" />
+        </mat-form-field>
 
-        <div class="input-parent">
-          <label>
-            
-            Don't you have an account? 
-            
-            <a routerLink="/signup">Sign up!</a>
+        <div class="center margin-top">
 
-          </label>
+          <button mat-raised-button color="primary" type="submit">
+            Login
+          </button>
+
         </div>
-    
-        <button type="submit">Submit</button>
+        
+        <span class="center margin-top">New to Tasko? <a class="sign-up-link" routerLink="signup">Sign Up!</a></span>
+
       </form>
 </div>
