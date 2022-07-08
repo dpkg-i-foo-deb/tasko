@@ -21,7 +21,7 @@ export class Api {
 
         let fullPath = this.url+this.loginPath;
 
-        return this.http.post<LoginResponse>('http://localhost:3000/login',user)
+        return this.http.post<LoginResponse>(fullPath,user)
 
     }
 
