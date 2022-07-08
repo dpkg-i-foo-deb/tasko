@@ -42,6 +42,8 @@ export class LoginComponent implements OnInit {
     let user : User = {
       email:'',
       password:'',
+      first_name:'',
+      last_name:'',
     };
 
     user.email=this.loginForm.controls['email'].value ?? '';
