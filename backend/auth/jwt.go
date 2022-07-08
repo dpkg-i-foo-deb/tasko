@@ -91,11 +91,11 @@ func ValidateAndContinue(next func(writer http.ResponseWriter, request *http.Req
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 		//If the requested method is options, the browser wants to negotiate CORS
+		//We enable CORS to allow the frontend to make requests
+		util.EnableCORS(&w)
+
+		//If the requested method is options, the browser wants to negotiate CORS
 		if r.Method == http.MethodOptions {
-
-			//We enable CORS to allow the frontend to make requests
-			util.EnableCORS(&w)
-
 			//And we return 200 ok
 			w.WriteHeader(http.StatusOK)
 			return

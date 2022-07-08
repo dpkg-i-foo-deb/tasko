@@ -6,6 +6,7 @@ import (
 	"backend/models"
 	"backend/models/utils"
 	"backend/util"
+	"database/sql"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -20,12 +21,11 @@ func hashPassword(password string) (string, error) {
 
 func SignUpService(writer http.ResponseWriter, request *http.Request) {
 
+	//We enable CORS to allow the frontend to make requests
+	util.EnableCORS(&writer)
+
 	//If the requested method is options, the browser wants to negotiate CORS
 	if request.Method == http.MethodOptions {
-
-		//We enable CORS to allow the frontend to make requests
-		util.EnableCORS(&writer)
-
 		//And we return 200 ok
 		writer.WriteHeader(http.StatusOK)
 		return
@@ -69,12 +69,11 @@ func SignUpService(writer http.ResponseWriter, request *http.Request) {
 
 func LoginService(writer http.ResponseWriter, request *http.Request) {
 
+	//We enable CORS to allow the frontend to make requests
+	util.EnableCORS(&writer)
+
 	//If the requested method is options, the browser wants to negotiate CORS
 	if request.Method == http.MethodOptions {
-
-		//We enable CORS to allow the frontend to make requests
-		util.EnableCORS(&writer)
-
 		//And we return 200 ok
 		writer.WriteHeader(http.StatusOK)
 		return
@@ -96,6 +95,11 @@ func LoginService(writer http.ResponseWriter, request *http.Request) {
 	//We recover both the user's email and password from database
 
 	err = database.LoginStatement.QueryRow(user.Email).Scan(&queriedUser.Email, &queriedUser.Password)
+
+	if err == sql.ErrNoRows {
+		writer.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
 	if err != nil {
 		log.Print("Failed login attempt: ", err)
@@ -138,12 +142,11 @@ func LoginService(writer http.ResponseWriter, request *http.Request) {
 
 func RefreshToken(writer http.ResponseWriter, request *http.Request) {
 
+	//We enable CORS to allow the frontend to make requests
+	util.EnableCORS(&writer)
+
 	//If the requested method is options, the browser wants to negotiate CORS
 	if request.Method == http.MethodOptions {
-
-		//We enable CORS to allow the frontend to make requests
-		util.EnableCORS(&writer)
-
 		//And we return 200 ok
 		writer.WriteHeader(http.StatusOK)
 		return
