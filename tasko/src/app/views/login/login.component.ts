@@ -35,7 +35,9 @@ export class LoginComponent implements OnInit {
       user.email=this.loginForm.controls['email'].value ?? '';
       user.password=this.loginForm.controls['password'].value ?? '';
 
-      this.api.login(user)
+      this.api.login(user).subscribe(data=>{
+        console.log(data)
+      })
     }
 
     

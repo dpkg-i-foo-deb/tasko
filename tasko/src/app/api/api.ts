@@ -20,8 +20,10 @@ export class Api {
     login(user:User) :Observable<response> {
 
         let fullPath = this.url+this.loginPath;
-        return this.http.post<response>(fullPath,user)
+        
+        //return this.http.post<response>('/api/login',user)
 
+        return this.http.post<response>('http://localhost:3000/login',user)
     }
 
 }
