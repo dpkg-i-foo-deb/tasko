@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HotToastService, ToastPersistConfig } from '@ngneat/hot-toast'
+import { HotToastService } from '@ngneat/hot-toast'
 
 
 import {FormGroup,FormControl,Validators} from '@angular/forms'
@@ -8,7 +8,6 @@ import {User} from '../../models/user'
 
 import {Api} from '../../api/api'
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoginResponse } from 'src/app/models/response';
 import { Router } from '@angular/router';
 
 @Component({
