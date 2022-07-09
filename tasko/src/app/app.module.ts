@@ -13,7 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input'
 import {MatButtonModule} from '@angular/material/button';
-import { HotToastModule } from '@ngneat/hot-toast'
+import { HotToastModule } from '@ngneat/hot-toast';
+import { HomeComponent } from './views/home/home.component'
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HotToastModule } from '@ngneat/hot-toast'
     LoginComponent,
     SignupComponent,
     PageNotFoundComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

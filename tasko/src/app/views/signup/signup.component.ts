@@ -75,6 +75,17 @@ export class SignupComponent implements OnInit {
               "Failed to Sign up. Does this user already exist?"
             )
           }
+          //Other stuff = The backend is not running
+          else{
+            this.toast.show(
+              "Cannot Connect to Backend! Is it Running?"
+            ),
+            {
+              duration : 15,
+              autoClose:false,
+              dismissible: true,
+            }
+          }
 
         },
         complete:()=>{
