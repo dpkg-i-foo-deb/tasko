@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from 'src/app/models/user';
 import Validation from '../../util/validation'
 
 @Component({
@@ -28,6 +29,22 @@ export class SignupComponent implements OnInit {
 
 
   signup(){
+
+    if(!this.signupForm.valid ){
+      return;
+    }
+
+    let user : User = {
+      email:'',
+      password:'',
+      first_name:'',
+      last_name:'',
+    }
+
+    user.email=this.signupForm.controls['email'].value ?? '';
+    user.password=this.signupForm.controls['password'].value ?? '';
+    user.first_name=this.signupForm.controls['first_name'].value ?? '';
+    user.last_name=this.signupForm.controls['last_name'].value ?? '';
 
   }
 
