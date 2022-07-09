@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import Validation from '../../util/validation'
 
 @Component({
   selector: 'app-signup',
@@ -13,8 +14,12 @@ export class SignupComponent implements OnInit {
     password : new FormControl ('',[Validators.required,Validators.minLength(4)]),
     password_confirm : new FormControl('',[Validators.required,Validators.minLength(4)]),
     first_name: new FormControl('',Validators.required),
-    last_name: new FormControl('')
-  })
+    last_name: new FormControl(''),
+  },
+  {
+    validators:[Validation.match('password','password_confirm')]
+  }
+  );
 
   constructor() { }
 
