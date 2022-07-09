@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
     if (!this.loginForm.valid)
     {
-      return
+      return;
     }
 
     let user : User = {
