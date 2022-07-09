@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   apiUrl:'http://localhost:3000/',
   loginPath:'login',
-  signupPath:'sign-up'
+  signupPath:'sign-up',
+  pingPath:'',
 };
 
 /*

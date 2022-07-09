@@ -28,6 +28,8 @@ export class AuthGuard implements CanActivate {
     //If it does not exist, redirect the user to the login page
     this.shouldRedirect(cookieExists)
 
+    //Step 2, verify if the access token is valid (Using the API index page)
+
     return cookieExists;
   }
   
