@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './util/auth-guard';
 import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
@@ -9,7 +10,11 @@ const routes: Routes = [
   {path: '', redirectTo:'login',pathMatch :'full'},
   {path:'login',component:LoginComponent},
   {path:'signup',component:SignupComponent},
-  {path:'home',component:HomeComponent},
+  {
+    path:'home',
+    component:HomeComponent,
+    canActivate:[AuthGuard]
+  },
   {path: '**',component:PageNotFoundComponent}
 
 ];
