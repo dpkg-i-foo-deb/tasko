@@ -17,13 +17,17 @@ export class Api {
     loginPath:string = environment.loginPath
     signupPath:string = environment.signupPath
 
+    getCookieOptions = {
+        headers: new HttpHeaders({'Content-Type':'application/json'}),
+        withCredentials:true
+    }
+
     constructor (private http:HttpClient) {}
 
     login(user:User) :Observable<LoginResponse> {
 
         let fullPath = this.url+this.loginPath;
-
-        return this.http.post<LoginResponse>(fullPath,user)
+        return this.http.post<LoginResponse>(fullPath,user,this.getCookieOptions)
 
     }
 
