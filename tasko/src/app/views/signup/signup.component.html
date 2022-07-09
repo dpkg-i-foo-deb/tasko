@@ -38,8 +38,12 @@
             <mat-error *ngIf="password_confirm?.errors?.['minlength']">
               This Password is too short!
             </mat-error>
+
+            <mat-error *ngIf="password_confirm?.errors?.['matching']">
+                Passwords must match!
+            </mat-error>
           
-          </mat-form-field>
+        </mat-form-field>
 
         <mat-form-field>
             <input matInput placeholder="First Name" formControlName="first_name" />
@@ -47,14 +51,13 @@
             <mat-error *ngIf="first_name?.errors?.['required']">
               This Field is Mandatory
             </mat-error>
-  
           
-          </mat-form-field>
+        </mat-form-field>
 
-          <mat-form-field>
+        <mat-form-field>
             <input matInput placeholder="Last Name" formControlName="last_name" />
           
-          </mat-form-field>
+        </mat-form-field>
 
         <div class="center margin-top">
 
