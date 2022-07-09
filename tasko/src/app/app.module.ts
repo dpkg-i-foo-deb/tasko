@@ -15,6 +15,7 @@ import {MatInputModule} from '@angular/material/input'
 import {MatButtonModule} from '@angular/material/button';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { HomeComponent } from './views/home/home.component'
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { HomeComponent } from './views/home/home.component'
     HotToastModule.forRoot()
   ],
 
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
