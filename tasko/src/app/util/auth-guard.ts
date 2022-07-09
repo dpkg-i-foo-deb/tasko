@@ -1,7 +1,12 @@
+import { keyframes } from '@angular/animations';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
+import { Api } from '../api/api';
+import { PingResponse } from '../models/response'
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +14,11 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate {
 
 
-  constructor (private cookieService:CookieService, private router:Router){}
+  constructor (
+    private cookieService:CookieService, 
+    private router:Router,
+    private api:Api
+    ){}
 
   shouldRedirect (cookieExists:boolean):any{
     if(!cookieExists)
@@ -18,19 +27,35 @@ export class AuthGuard implements CanActivate {
     }
   }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate () : Observable<boolean> {
+    //Ping the API to check if the session either exists or if it is valid
+    return this.api.ping().pipe(
 
-    //Step 1, verify is the access token exists
-    const cookieExists = this.cookieService.check('access-token');
+      map(response => {
+      if (!(response.response=="success")) {
+        this.router.navigate(['login']);
+        return false;
+      } else {       
+        return true;
+      }
+    }),
 
-    //If it does not exist, redirect the user to the login page
-    this.shouldRedirect(cookieExists)
+    catchError((error : HttpErrorResponse) => {
+    
+      //If we get 401 it means the token is not valid or it expired
+      
+      if(error.error==401){
+        //We try to refresh the token
+        
 
-    //Step 2, verify if the access token is valid (Using the API index page)
+      }else{
+        this.router.navigate(['login']);
+      }
 
-    return cookieExists;
+      return throwError(() => error);
+    }),
+
+    );
   }
   
 }

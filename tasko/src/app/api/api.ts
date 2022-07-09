@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
 
 import {User} from '../models/user'
 import {Observable} from 'rxjs'
-import { LoginResponse } from '../models/response';
+import { LoginResponse, PingResponse } from '../models/response';
 import { SignUpResponse } from '../models/response';
 
 @Injectable({
@@ -18,6 +18,13 @@ export class Api {
         withCredentials:true
     }
 
+    pingOptions = {
+        headers: new HttpHeaders({
+            'Content-Type':'application/json'
+        }),
+        withCredentials:true,
+    }
+
     constructor (private http:HttpClient) {}
 
     login(user:User) :Observable<LoginResponse> {
@@ -29,8 +36,8 @@ export class Api {
     }
 
     //Used to check if the access token either exists or is valid
-    ping():Observable<any>{
-        return this.http.get<any>(environment.apiUrl+environment.pingPath)
+    ping(): Observable<PingResponse> {
+        return this.http.get<PingResponse>(environment.apiUrl+environment.pingPath,this.pingOptions)
     }
 
 }

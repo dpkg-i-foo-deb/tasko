@@ -5,3 +5,7 @@ export interface LoginResponse {
 export interface SignUpResponse {
     response:string;
 }
+
+export interface PingResponse {
+    response:string;
+}
