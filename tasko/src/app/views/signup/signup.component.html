@@ -1,1 +1,70 @@
-<p>signup works!</p>
+<div class="form-container mat-elevation-z5">
+    <form [formGroup]="signupForm" (ngSubmit)="signup()">
+        <h1>Create a new Account!</h1>
+    
+        <mat-form-field>
+          <input matInput placeholder="Email Address" formControlName="email" />
+          
+          <mat-error *ngIf="email?.errors?.['required']">
+            This Field is Mandatory
+          </mat-error>
+
+          <mat-error *ngIf="email?.errors?.['email']">
+            Please Enter a Valid Email
+          </mat-error>
+
+        </mat-form-field>
+    
+        <mat-form-field>
+          <input matInput placeholder="Password" formControlName="password" type="password" />
+        
+          <mat-error *ngIf="password?.errors?.['required']">
+            This Field is Mandatory
+          </mat-error>
+
+          <mat-error *ngIf="password?.errors?.['minlength']">
+            This Password is too short!
+          </mat-error>
+        
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Confirm Password" formControlName="password_confirm" type="password" />
+          
+            <mat-error *ngIf="password_confirm?.errors?.['required']">
+              This Field is Mandatory
+            </mat-error>
+  
+            <mat-error *ngIf="password_confirm?.errors?.['minlength']">
+              This Password is too short!
+            </mat-error>
+          
+          </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="First Name" formControlName="first_name" />
+          
+            <mat-error *ngIf="first_name?.errors?.['required']">
+              This Field is Mandatory
+            </mat-error>
+  
+          
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="Last Name" formControlName="last_name" />
+          
+          </mat-form-field>
+
+        <div class="center margin-top">
+
+          <button mat-raised-button color="primary" type="submit">
+            Submit
+          </button>
+
+        </div>
+        
+        <span class="center margin-top">Already Have an Account? <a class="sign-up-link" routerLink="/login">Log In!</a></span>
+
+      </form>
+</div>
