@@ -124,7 +124,7 @@ func ValidateAndContinue(next func(writer http.ResponseWriter, request *http.Req
 		accessCookie, err = r.Cookie("access-token")
 
 		if err != nil {
-			w.WriteHeader(http.StatusForbidden)
+			w.WriteHeader(http.StatusUnauthorized)
 			log.Print("The request did not contain the access cookie")
 			response.Response = "The access cookie was not found"
 			json.NewEncoder(w).Encode(response)
