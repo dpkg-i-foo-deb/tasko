@@ -1,5 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
+import { Api } from 'src/app/api/api';
 import { User } from 'src/app/models/user';
 import Validation from '../../util/validation'
 
@@ -22,7 +26,11 @@ export class SignupComponent implements OnInit {
   }
   );
 
-  constructor() { }
+  constructor(
+    private api:Api,
+    private toast:HotToastService,
+    private router: Router,
+    ) { }
 
   ngOnInit(): void {
   }
@@ -45,6 +53,35 @@ export class SignupComponent implements OnInit {
     user.password=this.signupForm.controls['password'].value ?? '';
     user.first_name=this.signupForm.controls['first_name'].value ?? '';
     user.last_name=this.signupForm.controls['last_name'].value ?? '';
+
+    this.api.signup(user).pipe(
+      this.toast.observe({
+        success:'Signed Up. You can now log in!',
+        loading:'Creating Account...',
+        error: 'Something Went Wrong. Try Again!'
+      })
+    ).subscribe(
+      {
+        next:()=>{
+
+        },
+        
+        error: (error:HttpErrorResponse)=>{
+
+          //500 = Possibly already existing user
+          if(error.status==500)
+          {
+            this.toast.show(
+              "Failed to Sign up. Does this user already exist?"
+            )
+          }
+
+        },
+        complete:()=>{
+          this.router.navigate(['/login'])
+        }
+      }
+    )
 
   }
 
