@@ -13,10 +13,6 @@ import { SignUpResponse } from '../models/response';
 
 export class Api {
 
-    url:string = environment.apiUrl;
-    loginPath:string = environment.loginPath
-    signupPath:string = environment.signupPath
-
     getCookieOptions = {
         headers: new HttpHeaders({'Content-Type':'application/json'}),
         withCredentials:true
@@ -25,16 +21,17 @@ export class Api {
     constructor (private http:HttpClient) {}
 
     login(user:User) :Observable<LoginResponse> {
-
-        let fullPath = this.url+this.loginPath;
-        return this.http.post<LoginResponse>(fullPath,user,this.getCookieOptions)
-
+        return this.http.post<LoginResponse>(environment.apiUrl+environment.loginPath,user,this.getCookieOptions)
     }
 
     signup(user:User) : Observable<SignUpResponse>{
-        let fullPath = this.url+this.signupPath;
+        return this.http.post<SignUpResponse>(environment.apiUrl+environment.signupPath,user)
+    }
 
-        return this.http.post<SignUpResponse>(fullPath,user)
+    //Used to check if the access token either exists or is valid
+    ping():Observable<any>{
+        let fullPath=this.url+environment.pingPath
+        return this.http.get<any>(fullPath)
     }
 
 }
