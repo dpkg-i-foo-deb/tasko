@@ -30,8 +30,7 @@ export class Api {
 
     //Used to check if the access token either exists or is valid
     ping():Observable<any>{
-        let fullPath=this.url+environment.pingPath
-        return this.http.get<any>(fullPath)
+        return this.http.get<any>(environment.apiUrl)
     }
 
 }
