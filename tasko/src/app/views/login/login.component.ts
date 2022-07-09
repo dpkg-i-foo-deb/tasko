@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit {
 
         complete: () => {
           //TODO navigate somewhere
-          this.router.navigate(['']);
+          this.router.navigate(['/home']);
         }
       }
     );
