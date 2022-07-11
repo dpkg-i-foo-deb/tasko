@@ -210,6 +210,9 @@ func RefreshToken(writer http.ResponseWriter, request *http.Request) {
 
 		writer.WriteHeader(http.StatusOK)
 
+		response.Response = "refreshed"
+		json.NewEncoder(writer).Encode(response)
+
 	} else {
 
 		log.Print("Invalid refresh token received")
