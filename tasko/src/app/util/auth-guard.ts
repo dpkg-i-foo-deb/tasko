@@ -28,11 +28,11 @@ export class AuthGuard implements CanActivate {
     //Ping the API to check if the session either exists or if it is valid
     return this.api.ping().pipe(
 
-      map(response => {
+      map(() => {
       return true;
     }),
 
-    catchError(err=>{
+    catchError(()=>{
 
       this.router.navigate(['/login']);
 
