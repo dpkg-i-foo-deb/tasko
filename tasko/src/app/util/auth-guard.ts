@@ -29,15 +29,11 @@ export class AuthGuard implements CanActivate {
     return this.api.ping().pipe(
 
       map(response => {
-      if (!(response.response=="success")) {
-        this.router.navigate(['login']);
-        return false;
-      } else {       
-        return true;
-      }
+      return true;
     }),
 
     catchError(err=>{
+
       this.router.navigate(['/login']);
 
       return of(false);
