@@ -164,8 +164,8 @@ func RefreshToken(writer http.ResponseWriter, request *http.Request) {
 	refreshCookie, err := request.Cookie("refresh-token")
 
 	if err != nil {
-		log.Print("The request did not contain a refresh cookie", err)
-		writer.WriteHeader(http.StatusForbidden)
+		log.Print("The request did not contain a refresh cookie ", err)
+		writer.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
