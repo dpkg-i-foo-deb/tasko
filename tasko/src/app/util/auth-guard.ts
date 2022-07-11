@@ -1,11 +1,8 @@
-import { keyframes } from '@angular/animations';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { catchError, EMPTY, map, mergeMap, Observable, of, throwError } from 'rxjs';
+import { catchError,map, Observable, of} from 'rxjs';
 import { Api } from '../api/api';
-import { PingResponse } from '../models/response'
 
 
 @Injectable({
@@ -42,7 +39,7 @@ export class AuthGuard implements CanActivate {
 
     catchError(err=>{
       this.router.navigate(['/login']);
-      
+
       return of(false);
     })
 
