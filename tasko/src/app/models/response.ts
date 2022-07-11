@@ -9,3 +9,7 @@ export interface SignUpResponse {
 export interface PingResponse {
     response:string;
 }
+
+export interface RefreshResponse {
+    response:string;
+}

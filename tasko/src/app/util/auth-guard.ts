@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, EMPTY, map, mergeMap, Observable, of, throwError } from 'rxjs';
 import { Api } from '../api/api';
 import { PingResponse } from '../models/response'
 
@@ -40,20 +40,11 @@ export class AuthGuard implements CanActivate {
       }
     }),
 
-    catchError((error : HttpErrorResponse) => {
-    
-      //If we get 401 it means the token is not valid or it expired
+    catchError(err=>{
+      this.router.navigate(['/login']);
       
-      if(error.error==401){
-        //We try to refresh the token
-        
-
-      }else{
-        this.router.navigate(['login']);
-      }
-
-      return throwError(() => error);
-    }),
+      return of(false);
+    })
 
     );
   }

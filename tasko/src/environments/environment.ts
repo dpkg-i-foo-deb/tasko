@@ -8,6 +8,7 @@ export const environment = {
   loginPath:'login',
   signupPath:'sign-up',
   pingPath:'',
+  refreshPath:'refresh',
 };
 
 /*
