@@ -28,6 +28,8 @@ export class AuthInterceptor implements HttpInterceptor {
           return throwError(()=>error)
         }
 
+        //TODO verify if the request includes login
+
         //If the status code is not 401, throw another error
         if(error.status!=401){
           return throwError(()=>error)
@@ -38,12 +40,10 @@ export class AuthInterceptor implements HttpInterceptor {
                     .pipe(
                       catchError((error:HttpErrorResponse)=>{
                         if(error.status==401){
-                          // TODO redirect to login
                           console.log('User session expired')
                           return throwError(()=>error)
                         }
                         else{
-                          //TODO show error
                           console.log('Something went wrong')
                           return throwError(()=>error)
                         }
@@ -54,5 +54,4 @@ export class AuthInterceptor implements HttpInterceptor {
       })
     );
   }
-
 }
