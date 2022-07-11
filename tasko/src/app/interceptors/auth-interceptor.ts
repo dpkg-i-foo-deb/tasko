@@ -8,6 +8,7 @@ import {
 } from '@angular/common/http';
 import { catchError, from, Observable, switchMap, throwError } from 'rxjs';
 import { Api } from '../api/api';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -21,10 +22,18 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(clonedRequest).pipe(
       catchError((error:HttpErrorResponse)=>{
         
+
+        //If we're trying to refresh the token, throw an error
+        if(request.url.includes(environment.refreshPath)){
+          return throwError(()=>error)
+        }
+
+        //If the status code is not 401, throw another error
         if(error.status!=401){
           return throwError(()=>error)
         }
 
+        //The conditions above should guarantee the refresh token exists
         return from(this.api.refresh())
                     .pipe(
                       catchError((error:HttpErrorResponse)=>{
