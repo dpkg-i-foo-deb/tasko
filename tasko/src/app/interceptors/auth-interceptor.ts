@@ -40,7 +40,7 @@ export class AuthInterceptor implements HttpInterceptor {
                     .pipe(
                       catchError((error:HttpErrorResponse)=>{
                         if(error.status==401){
-                          console.log('User session expired')
+                          console.log('User session expired or Invalid Credentials')
                           return throwError(()=>error)
                         }
                         else{
