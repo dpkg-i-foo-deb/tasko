@@ -7,13 +7,11 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
 import { SignupComponent } from './views/signup/signup.component';
 
 const routes: Routes = [
-  {path: '', redirectTo:'login',pathMatch :'full'},
+  {path: '', redirectTo:'home',pathMatch :'full'},
   {path:'login',component:LoginComponent},
   {path:'signup',component:SignupComponent},
   {
-    path:'home',
-    component:HomeComponent,
-    canActivate:[AuthGuard]
+    path:'home', component:HomeComponent,
   },
   {path: '**',component:PageNotFoundComponent}
 
