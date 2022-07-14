@@ -19,13 +19,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input'
 import {MatButtonModule} from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar'
-import { MatIconModule } from '@angular/material/icon';
 
 //Other stuffies
 import { HotToastModule } from '@ngneat/hot-toast';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
-
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -45,8 +43,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatToolbarModule,
-    MatIconModule,
+    SharedModule,
     HotToastModule.forRoot()
   ],
 
