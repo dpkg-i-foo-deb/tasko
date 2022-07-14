@@ -20,6 +20,7 @@ import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input'
 import {MatButtonModule} from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatIconModule } from '@angular/material/icon';
 
 //Other stuffies
 import { HotToastModule } from '@ngneat/hot-toast';
@@ -45,6 +46,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     MatInputModule,
     MatButtonModule,
     MatToolbarModule,
+    MatIconModule,
     HotToastModule.forRoot()
   ],
 
