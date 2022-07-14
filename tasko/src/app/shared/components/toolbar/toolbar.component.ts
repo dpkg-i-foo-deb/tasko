@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AppComponent } from 'src/app/app.component';
+
 
 @Component({
   selector: 'app-toolbar',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private app:AppComponent) {
+   }
 
   ngOnInit(): void {
+  }
+
+  toggleNavBar(){
+    this.app.toggleNavBar();
   }
 
 }

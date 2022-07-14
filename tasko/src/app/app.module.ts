@@ -19,11 +19,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input'
 import {MatButtonModule} from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list'
 
 //Other stuffies
 import { HotToastModule } from '@ngneat/hot-toast';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { SharedModule } from './shared/shared.module';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +47,9 @@ import { SharedModule } from './shared/shared.module';
     MatInputModule,
     MatButtonModule,
     SharedModule,
-    HotToastModule.forRoot()
+    HotToastModule.forRoot(),
+    MatSidenavModule,
+    MatListModule,
   ],
 
   providers: [{
