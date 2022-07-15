@@ -26,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { SharedModule } from './shared/shared.module';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { SharedModule } from './shared/shared.module';
     SignupComponent,
     PageNotFoundComponent,
     HomeComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
