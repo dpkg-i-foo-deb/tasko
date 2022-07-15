@@ -9,4 +9,9 @@ mat-sidenav-container {
 
 .text-container {
   margin-left: 10%;
+  white-space: nowrap;
+}
+
+mat-sidenav {
+  min-width: 170px;
 }

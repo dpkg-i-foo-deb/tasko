@@ -24,9 +24,23 @@ export class AppComponent {
     this.matIconRegistry.addSvgIcon(
       'menu',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/menu.svg')
-    )
+    );
 
-    this.matIconRegistry.addSvgIcon('home', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/home.svg'))
+    this.matIconRegistry.addSvgIcon('home',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/home.svg')
+    );
+
+    this.matIconRegistry.addSvgIcon('login',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/login.svg')
+    );
+
+    this.matIconRegistry.addSvgIcon('sign-up',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/sign-up.svg')
+    );
+
+    this.matIconRegistry.addSvgIcon('dashboard',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/dashboard.svg')
+    );
 
   }
 
