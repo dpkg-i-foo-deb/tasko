@@ -27,6 +27,7 @@ import { HotToastModule } from '@ngneat/hot-toast';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { SharedModule } from './shared/shared.module';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatIconModule,
     SharedModule,
     HotToastModule.forRoot(),
     MatSidenavModule,

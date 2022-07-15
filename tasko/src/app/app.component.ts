@@ -26,6 +26,8 @@ export class AppComponent {
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/menu.svg')
     )
 
+    this.matIconRegistry.addSvgIcon('home', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/home.svg'))
+
   }
 
   title = 'tasko';

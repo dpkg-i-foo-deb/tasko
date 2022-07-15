@@ -2,9 +2,15 @@
 
     <mat-sidenav #sidenav mode="side">
         <mat-nav-list>
-            <a mat-list-item routerLink="/home">Home</a>
+            <a mat-list-item routerLink="/home">
+                <mat-icon svgIcon="home" [ngStyle]="{'color':'black'}"> </mat-icon>
+                <span class="text-container">Home</span>
+            </a>
+
             <a mat-list-item routerLink="/login">Log In</a>
+
             <a mat-list-item routerLink="/signup">Sign Up</a>
+
             <a mat-list-item routerLink="/dashboard">Dashboard</a>
         </mat-nav-list>
     </mat-sidenav>
