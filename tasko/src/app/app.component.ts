@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 
 //Weird stuffies
-import{ DomSanitizer } from '@angular/platform-browser'
+import { DomSanitizer } from '@angular/platform-browser'
 
 //Material stuffies
 import { MatIconRegistry } from '@angular/material/icon'
@@ -18,9 +18,9 @@ export class AppComponent {
   sidenav!: MatSidenav;
 
   constructor(
-    private matIconRegistry:MatIconRegistry,
+    private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
-  ){
+  ) {
     this.matIconRegistry.addSvgIcon(
       'menu',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/menu.svg')
@@ -30,15 +30,15 @@ export class AppComponent {
 
   title = 'tasko';
 
-  openNavBar(){
+  openNavBar() {
     this.sidenav.open();
   }
 
-  closeNavBar(){
+  closeNavBar() {
     this.sidenav.close();
   }
 
-  toggleNavBar(){
+  toggleNavBar() {
     this.sidenav.toggle();
   }
 }

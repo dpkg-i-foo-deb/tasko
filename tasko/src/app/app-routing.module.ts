@@ -7,13 +7,13 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
 import { SignupComponent } from './views/signup/signup.component';
 
 const routes: Routes = [
-  {path: '', redirectTo:'home',pathMatch :'full'},
-  {path:'login',component:LoginComponent},
-  {path:'signup',component:SignupComponent},
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
   {
-    path:'home', component:HomeComponent,
+    path: 'home', component: HomeComponent,
   },
-  {path: '**',component:PageNotFoundComponent}
+  { path: '**', component: PageNotFoundComponent }
 
 ];
 

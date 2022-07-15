@@ -5,22 +5,22 @@ import { AppRoutingModule } from './app-routing.module';
 
 //Component stuffies
 import { AppComponent } from './app.component';
+import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
-import { SignupComponent } from './views/signup/signup.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
-import { HomeComponent } from './views/home/home.component'
+import { SignupComponent } from './views/signup/signup.component';
 
 //Forms and HTTP stuffies
-import {ReactiveFormsModule,FormsModule} from '@angular/forms'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //Material Stuffies
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatFormFieldModule} from '@angular/material/form-field'
-import {MatInputModule} from '@angular/material/input'
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Other stuffies
 import { HotToastModule } from '@ngneat/hot-toast';

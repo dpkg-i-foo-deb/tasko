@@ -9,13 +9,13 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(private app:AppComponent) {
-   }
+  constructor(private app: AppComponent) {
+  }
 
   ngOnInit(): void {
   }
 
-  toggleNavBar(){
+  toggleNavBar() {
     this.app.toggleNavBar();
   }
 

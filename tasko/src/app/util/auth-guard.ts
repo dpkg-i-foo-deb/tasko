@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { catchError,map, Observable, of} from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { Api } from '../api/api';
 
 
@@ -11,35 +11,34 @@ import { Api } from '../api/api';
 export class AuthGuard implements CanActivate {
 
 
-  constructor (
-    private cookieService:CookieService, 
-    private router:Router,
-    private api:Api
-    ){}
+  constructor(
+    private cookieService: CookieService,
+    private router: Router,
+    private api: Api
+  ) { }
 
-  shouldRedirect (cookieExists:boolean):any{
-    if(!cookieExists)
-    {
+  shouldRedirect(cookieExists: boolean): any {
+    if (!cookieExists) {
       this.router.navigate(['login']);
     }
   }
 
-  canActivate () : Observable<boolean> {
+  canActivate(): Observable<boolean> {
     //Ping the API to check if the session either exists or if it is valid
     return this.api.ping().pipe(
 
       map(() => {
-      return true;
-    }),
+        return true;
+      }),
 
-    catchError(()=>{
+      catchError(() => {
 
-      this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
 
-      return of(false);
-    })
+        return of(false);
+      })
 
     );
   }
-  
+
 }

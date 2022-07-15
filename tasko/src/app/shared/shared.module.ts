@@ -10,12 +10,12 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 @NgModule({
   declarations: [ToolbarComponent],
   imports: [
-    CommonModule, 
+    CommonModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
     MatSidenavModule
   ],
-  exports:[ToolbarComponent]
+  exports: [ToolbarComponent]
 })
 export class SharedModule { }

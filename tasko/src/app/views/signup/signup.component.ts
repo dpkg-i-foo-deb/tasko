@@ -15,80 +15,79 @@ import Validation from '../../util/validation'
 export class SignupComponent implements OnInit {
 
   signupForm = new FormGroup({
-    email : new FormControl('',[Validators.required, Validators.email]),
-    password : new FormControl ('',[Validators.required,Validators.minLength(4)]),
-    password_confirm : new FormControl('',[Validators.required,Validators.minLength(4)]),
-    first_name: new FormControl('',Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    password_confirm: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    first_name: new FormControl('', Validators.required),
     last_name: new FormControl(''),
   },
-  {
-    validators:[Validation.match('password','password_confirm')]
-  }
+    {
+      validators: [Validation.match('password', 'password_confirm')]
+    }
   );
 
   constructor(
-    private api:Api,
-    private toast:HotToastService,
+    private api: Api,
+    private toast: HotToastService,
     private router: Router,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
   }
 
 
-  signup(){
+  signup() {
 
-    if(!this.signupForm.valid ){
+    if (!this.signupForm.valid) {
       return;
     }
 
-    let user : User = {
-      email:'',
-      password:'',
-      first_name:'',
-      last_name:'',
+    let user: User = {
+      email: '',
+      password: '',
+      first_name: '',
+      last_name: '',
     }
 
-    user.email=this.signupForm.controls['email'].value ?? '';
-    user.password=this.signupForm.controls['password'].value ?? '';
-    user.first_name=this.signupForm.controls['first_name'].value ?? '';
-    user.last_name=this.signupForm.controls['last_name'].value ?? '';
+    user.email = this.signupForm.controls['email'].value ?? '';
+    user.password = this.signupForm.controls['password'].value ?? '';
+    user.first_name = this.signupForm.controls['first_name'].value ?? '';
+    user.last_name = this.signupForm.controls['last_name'].value ?? '';
 
     this.api.signup(user).pipe(
       this.toast.observe({
-        success:'Signed Up. You can now log in!',
-        loading:'Creating Account...',
+        success: 'Signed Up. You can now log in!',
+        loading: 'Creating Account...',
         error: 'Something Went Wrong. Try Again!'
       })
     ).subscribe(
       {
-        next:()=>{
+        next: () => {
 
         },
-        
-        error: (error:HttpErrorResponse)=>{
+
+        error: (error: HttpErrorResponse) => {
 
           //500 = Possibly already existing user
-          if(error.status==500)
-          {
+          if (error.status == 500) {
             this.toast.show(
               "Failed to Sign up. Does this user already exist?"
             )
           }
           //Other stuff = The backend is not running
-          else{
+          else {
             this.toast.show(
               "Cannot Connect to Backend! Is it Running?"
             ),
             {
-              duration : 15,
-              autoClose:false,
+              duration: 15,
+              autoClose: false,
               dismissible: true,
             }
           }
 
         },
-        complete:()=>{
+        complete: () => {
           this.router.navigate(['/login'])
         }
       }
@@ -96,23 +95,23 @@ export class SignupComponent implements OnInit {
 
   }
 
-  get email(){
+  get email() {
     return this.signupForm.get('email');
   }
 
-  get password(){
+  get password() {
     return this.signupForm.get('password');
   }
 
-  get first_name(){
+  get first_name() {
     return this.signupForm.get('first_name');
   }
 
-  get last_name(){
+  get last_name() {
     return this.signupForm.get('last_name');
   }
 
-  get password_confirm(){
+  get password_confirm() {
     return this.signupForm.get('password_confirm');
   }
 

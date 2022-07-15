@@ -13,44 +13,44 @@ import { environment } from 'src/environments/environment';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private api:Api) {}
+  constructor(private api: Api) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    
+
     const clonedRequest = request.clone();
-    
+
     return next.handle(clonedRequest).pipe(
-      catchError((error:HttpErrorResponse)=>{
-        
+      catchError((error: HttpErrorResponse) => {
+
 
         //If we're trying to refresh the token, throw an error
-        if(request.url.includes(environment.refreshPath)){
-          return throwError(()=>error)
+        if (request.url.includes(environment.refreshPath)) {
+          return throwError(() => error)
         }
 
         //TODO verify if the request includes login
 
         //If the status code is not 401, throw another error
-        if(error.status!=401){
-          return throwError(()=>error)
+        if (error.status != 401) {
+          return throwError(() => error)
         }
 
         //The conditions above should guarantee the refresh token exists
         return from(this.api.refresh())
-                    .pipe(
-                      catchError((error:HttpErrorResponse)=>{
-                        if(error.status==401){
-                          console.log('User session expired or Invalid Credentials')
-                          return throwError(()=>error)
-                        }
-                        else{
-                          console.log('Something went wrong')
-                          return throwError(()=>error)
-                        }
-                      }),
-                      switchMap(() => 
-                      next.handle(clonedRequest)
-                      ))
+          .pipe(
+            catchError((error: HttpErrorResponse) => {
+              if (error.status == 401) {
+                console.log('User session expired or Invalid Credentials')
+                return throwError(() => error)
+              }
+              else {
+                console.log('Something went wrong')
+                return throwError(() => error)
+              }
+            }),
+            switchMap(() =>
+              next.handle(clonedRequest)
+            ))
       })
     );
   }

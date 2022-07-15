@@ -1,42 +1,42 @@
 <div class="form-container mat-elevation-z5">
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
-        <h1>Login to Your Account</h1>
-    
-        <mat-form-field>
-          <input matInput placeholder="Email Address" formControlName="email" />
-          
-          <mat-error *ngIf="email?.errors?.['required']">
-            This Field is Mandatory
-          </mat-error>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <h1>Login to Your Account</h1>
 
-          <mat-error *ngIf="email?.errors?.['email']">
-            Please Enter a Valid Email
-          </mat-error>
+    <mat-form-field>
+      <input matInput placeholder="Email Address" formControlName="email" />
 
-        </mat-form-field>
-    
-        <mat-form-field>
-          <input matInput placeholder="Password" formControlName="password" type="password" />
-        
-          <mat-error *ngIf="password?.errors?.['required']">
-            This Field is Mandatory
-          </mat-error>
+      <mat-error *ngIf="email?.errors?.['required']">
+        This Field is Mandatory
+      </mat-error>
 
-          <mat-error *ngIf="password?.errors?.['minlength']">
-            This Password is too short!
-          </mat-error>
-        
-        </mat-form-field>
+      <mat-error *ngIf="email?.errors?.['email']">
+        Please Enter a Valid Email
+      </mat-error>
 
-        <div class="center margin-top">
+    </mat-form-field>
 
-          <button mat-raised-button color="primary" type="submit">
-            Login
-          </button>
+    <mat-form-field>
+      <input matInput placeholder="Password" formControlName="password" type="password" />
 
-        </div>
-        
-        <span class="center margin-top">New to Tasko? <a class="sign-up-link" routerLink="/signup">Sign Up!</a></span>
+      <mat-error *ngIf="password?.errors?.['required']">
+        This Field is Mandatory
+      </mat-error>
 
-      </form>
+      <mat-error *ngIf="password?.errors?.['minlength']">
+        This Password is too short!
+      </mat-error>
+
+    </mat-form-field>
+
+    <div class="center margin-top">
+
+      <button mat-raised-button color="primary" type="submit">
+        Login
+      </button>
+
+    </div>
+
+    <span class="center margin-top">New to Tasko? <a class="sign-up-link" routerLink="/signup">Sign Up!</a></span>
+
+  </form>
 </div>

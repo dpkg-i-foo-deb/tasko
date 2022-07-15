@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast'
 
 
-import {FormGroup,FormControl,Validators} from '@angular/forms'
+import { FormGroup, FormControl, Validators } from '@angular/forms'
 
-import {User} from '../../models/user'
+import { User } from '../../models/user'
 
-import {Api} from '../../api/api'
+import { Api } from '../../api/api'
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -18,66 +18,63 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
-    email : new FormControl('',[Validators.required, Validators.email]),
-    password : new FormControl ('',[Validators.required,Validators.minLength(4)])
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(4)])
   })
 
   constructor(
-    private api:Api,
+    private api: Api,
     private toast: HotToastService,
-    private router:Router
-    ) { }
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
 
-  login(){
+  login() {
 
-    if (!this.loginForm.valid)
-    {
+    if (!this.loginForm.valid) {
       return;
     }
 
-    let user : User = {
-      email:'',
-      password:'',
-      first_name:'',
-      last_name:'',
+    let user: User = {
+      email: '',
+      password: '',
+      first_name: '',
+      last_name: '',
     };
 
-    user.email=this.loginForm.controls['email'].value ?? '';
-    user.password=this.loginForm.controls['password'].value ?? '';
+    user.email = this.loginForm.controls['email'].value ?? '';
+    user.password = this.loginForm.controls['password'].value ?? '';
 
     this.api.login(user).pipe(
       this.toast.observe({
-        success:'Logged in Successfully!',
-        loading:'Logging in...',
+        success: 'Logged in Successfully!',
+        loading: 'Logging in...',
         error: 'Something Went Wrong. Try Again!'
       })
-    ).subscribe(      
+    ).subscribe(
       {
-        next : () => {
+        next: () => {
           //TODO what the heck do I do here?
         },
 
-        error: (error:HttpErrorResponse) => {
+        error: (error: HttpErrorResponse) => {
 
           //401 = Username or password incorrect
-          if(error.status == 401)
-          {
+          if (error.status == 401) {
             this.toast.show(
               "Username or Password Incorrect!",
             )
           }
           //Other stuff means backend is not running
-          else
-          {
+          else {
             this.toast.show(
               "Cannot Connect to Backend! Is it Running?"
             ),
             {
-              duration : 15,
-              autoClose:false,
+              duration: 15,
+              autoClose: false,
               dismissible: true,
             }
           }
@@ -89,14 +86,14 @@ export class LoginComponent implements OnInit {
         }
       }
     );
-    
+
   }
 
-  get email(){
+  get email() {
     return this.loginForm.get('email');
   }
 
-  get password(){
+  get password() {
     return this.loginForm.get('password');
   }
 
