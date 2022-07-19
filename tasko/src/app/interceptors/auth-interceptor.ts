@@ -31,7 +31,10 @@ export class AuthInterceptor implements HttpInterceptor {
           return throwError(() => error)
         }
 
-        //TODO verify if the request includes login
+        //If we're trying to log in, it makes no sense to refresh
+        if (request.url.includes(environment.loginPath)) {
+          return throwError(() => error)
+        }
 
         //If the status code is not 401, throw another error
         if (error.status != 401) {
