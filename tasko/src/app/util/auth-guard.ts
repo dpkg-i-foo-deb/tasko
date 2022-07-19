@@ -44,7 +44,20 @@ export class AuthGuard implements CanActivate {
       }
 
     } else {
-      return of(false)
+      return this.api.ping().pipe(
+
+        map(() => {
+          this.cookieService.set('active-session', 'true')
+          return true;
+        }),
+
+        catchError(() => {
+          this.cookieService.set('active-session', 'false')
+          this.router.navigate(['/login']);
+          return of(false);
+        })
+
+      );
     }
 
   }
