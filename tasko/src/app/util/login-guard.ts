@@ -13,9 +13,7 @@ export class LoginGuard implements CanActivate {
     private router: Router,
   ) { }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     //If there is an active session, there is no need to navigate to login
     if (this.cookieService.check('active-session')) {
       if (this.cookieService.get('active-session') == 'true') {
