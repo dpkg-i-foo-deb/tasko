@@ -28,6 +28,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { SharedModule } from './shared/shared.module';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { MatIconModule } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -59,8 +60,9 @@ import { MatIconModule } from '@angular/material/icon';
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
-    multi: true
-  }],
+    multi: true,
+  },
+    CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

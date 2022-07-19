@@ -9,11 +9,14 @@ import {
 import { catchError, from, Observable, switchMap, throwError } from 'rxjs';
 import { Api } from '../api/api';
 import { environment } from 'src/environments/environment';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private api: Api) { }
+  constructor(
+    private api: Api,
+    private cookieService: CookieService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
@@ -41,9 +44,12 @@ export class AuthInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
               if (error.status == 401) {
                 console.log('User session expired or Invalid Credentials')
+                //Set the session cookie to false
+                this.cookieService.set('active-session', 'false')
                 return throwError(() => error)
               }
               else {
+                this.cookieService.set('active-session', 'false')
                 console.log('Something went wrong')
                 return throwError(() => error)
               }

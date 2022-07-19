@@ -9,6 +9,7 @@ import { User } from '../../models/user'
 import { Api } from '../../api/api'
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private api: Api,
     private toast: HotToastService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService,
   ) { }
 
   ngOnInit(): void {
@@ -81,7 +83,10 @@ export class LoginComponent implements OnInit {
         },
 
         complete: () => {
-          //TODO navigate somewhere
+
+          //Create a session cookie
+          this.cookieService.set('active-session', 'true')
+
           this.router.navigate(['/dashboard']);
         }
       }
