@@ -29,6 +29,10 @@ export class Api {
         withCredentials: true
     }
 
+    getTasksOptions = {
+        withCredentials: true
+    }
+
     constructor(private http: HttpClient) { }
 
     login(user: User): Observable<LoginResponse> {
@@ -46,6 +50,10 @@ export class Api {
 
     refresh(): Observable<RefreshResponse> {
         return this.http.get<RefreshResponse>(environment.apiUrl + environment.refreshPath, this.refreshOptions)
+    }
+
+    getAllTasks(): Observable<Task[]> {
+        return this.http.get<Task[]>(environment.apiUrl + environment.getTasksPath, this.getTasksOptions)
     }
 
 }
