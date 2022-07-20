@@ -21,6 +21,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker'
 
 //Other stuffies
 import { HotToastModule } from '@ngneat/hot-toast';
@@ -30,7 +32,8 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CookieService } from 'ngx-cookie-service';
 import { NewTaskDialogComponent } from './views/dialogs/new-task-dialog/new-task-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 
 @NgModule({
@@ -59,6 +62,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSidenavModule,
     MatListModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
 
   providers: [{

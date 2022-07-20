@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
 
     this.dialog.open(NewTaskDialogComponent,
       {
-        width: '30%',
+        width: '50%',
       })
 
   }
