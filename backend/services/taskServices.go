@@ -200,7 +200,7 @@ func GetAllTasksService(writer http.ResponseWriter, request *http.Request, bodyB
 		return
 	}
 
-	writer.WriteHeader(http.StatusFound)
+	writer.WriteHeader(http.StatusOK)
 	json.NewEncoder(writer).Encode(allTasks)
 }
 
