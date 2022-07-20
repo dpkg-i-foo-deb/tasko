@@ -29,6 +29,8 @@ import { SharedModule } from './shared/shared.module';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CookieService } from 'ngx-cookie-service';
+import { NewTaskDialogComponent } from './views/dialogs/new-task-dialog/new-task-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -39,6 +41,7 @@ import { CookieService } from 'ngx-cookie-service';
     PageNotFoundComponent,
     HomeComponent,
     DashboardComponent,
+    NewTaskDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +58,7 @@ import { CookieService } from 'ngx-cookie-service';
     HotToastModule.forRoot(),
     MatSidenavModule,
     MatListModule,
+    MatDialogModule,
   ],
 
   providers: [{
