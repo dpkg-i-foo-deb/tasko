@@ -1,7 +1,18 @@
 <app-toolbar></app-toolbar>
 
-<div class="button-container">
+<div class="container">
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="openNewTaskDialog()">
+      New Task
+    </button>
+  </div>
 
-    <button mat-raised-button color="primary" (click)="openNewTaskDialog()">New Task</button>
-
+  <div class="pending-container">
+    <h2>What Needs to be Done...</h2>
+    <mat-list>
+      <mat-list-item *ngFor="let task of tasks">
+        {{ task }}
+      </mat-list-item>
+    </mat-list>
+  </div>
 </div>

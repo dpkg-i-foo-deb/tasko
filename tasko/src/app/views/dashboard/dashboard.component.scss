@@ -1,5 +1,16 @@
-.button-container {
-    padding-top: 10px;
-    padding-right: 10px;
-    float: right;
+.container {
+  display: flex;
+  flex-direction: column;
 }
+
+.button-container {
+  padding-top: 10px;
+  padding-right: 10px;
+  float: right;
+  text-align: right;
+}
+
+.pending-container {
+  padding-left: 10px;
+}
+
