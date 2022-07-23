@@ -9,7 +9,8 @@ export const environment = {
   signupPath: 'sign-up',
   pingPath: '',
   refreshPath: 'refresh',
-  getTasksPath: 'tasks'
+  getTasksPath: 'tasks',
+  createTaskPath: 'tasks'
 };
 
 /*

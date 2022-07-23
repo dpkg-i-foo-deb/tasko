@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Api } from 'src/app/api/api';
 import { MatDialog } from '@angular/material/dialog'
 import { NewTaskDialogComponent } from '../dialogs/new-task-dialog/new-task-dialog.component';
+import {Task} from 'src/app/models/task';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,7 +30,7 @@ export class DashboardComponent implements OnInit {
 
     this.dialog.open(NewTaskDialogComponent,
       {
-        width: '50%',
+			width: '350px',
       })
 
   }

@@ -6,6 +6,7 @@ import { User } from '../models/user'
 import { Observable } from 'rxjs'
 import { LoginResponse, PingResponse, RefreshResponse } from '../models/response';
 import { SignUpResponse } from '../models/response';
+import {Task} from '../models/task';
 
 @Injectable({
     providedIn: 'root'
@@ -33,6 +34,10 @@ export class Api {
         withCredentials: true
     }
 
+	createTaskOptions ={
+		withCredentials:true
+	}
+
     constructor(private http: HttpClient) { }
 
     login(user: User): Observable<LoginResponse> {
@@ -58,5 +63,9 @@ export class Api {
         return this.http.get<Task[]>(environment.apiUrl + environment.getTasksPath, 
 									 this.getTasksOptions)
     }
-
+	
+	createTask(task:Task): Observable<any>{
+		return this.http.put<any>(environment.apiUrl+environment.createTaskPath,
+								task,this.createTaskOptions )
+	}
 }
