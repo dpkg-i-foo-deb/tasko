@@ -45,15 +45,18 @@ export class Api {
 
     //Used to check if the access token either exists or is valid
     ping(): Observable<PingResponse> {
-        return this.http.get<PingResponse>(environment.apiUrl + environment.pingPath, this.pingOptions)
+        return this.http.get<PingResponse>(environment.apiUrl + environment.pingPath, 
+										   this.pingOptions)
     }
 
     refresh(): Observable<RefreshResponse> {
-        return this.http.get<RefreshResponse>(environment.apiUrl + environment.refreshPath, this.refreshOptions)
+        return this.http.get<RefreshResponse>(environment.apiUrl + environment.refreshPath, 
+											  this.refreshOptions)
     }
 
     getAllTasks(): Observable<Task[]> {
-        return this.http.get<Task[]>(environment.apiUrl + environment.getTasksPath, this.getTasksOptions)
+        return this.http.get<Task[]>(environment.apiUrl + environment.getTasksPath, 
+									 this.getTasksOptions)
     }
 
 }
