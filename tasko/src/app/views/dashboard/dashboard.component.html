@@ -9,10 +9,21 @@
 
   <div class="pending-container">
     <h2>What Needs to be Done...</h2>
-    <mat-list>
-      <mat-list-item *ngFor="let task of tasks">
-        {{ task }}
-      </mat-list-item>
-    </mat-list>
+    <mat-selection-list #pendingTasks>
+      <mat-list-option *ngFor="let task of tasks">
+        <mat-card>
+          <mat-card-title>
+            {{ task.title }}
+          </mat-card-title>
+          <mat-card-subtitle>
+            {{ task.description }}
+          </mat-card-subtitle>
+        </mat-card>
+      </mat-list-option>
+    </mat-selection-list>
+    <p class="selected-text">
+      Selected to Mark as Done:
+      {{ pendingTasks.selectedOptions.selected.length }}
+    </p>
   </div>
 </div>
