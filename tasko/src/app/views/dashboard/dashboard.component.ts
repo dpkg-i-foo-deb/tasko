@@ -10,14 +10,27 @@ import { Task } from 'src/app/models/task';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  tasks!: Task[];
+  tasks: Task[] = [];
+  doneTasks: Task[] = [];
+  pendingTasks: Task[] = [];
 
   constructor(private api: Api, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.api.getAllTasks().subscribe((response) => {
       this.tasks = response ?? [];
+      this.organizeTasks();
     });
+  }
+
+  organizeTasks() {
+    for (let task of this.tasks) {
+      if (task.status) {
+        this.doneTasks.push(task);
+      } else {
+        this.pendingTasks.push(task);
+      }
+    }
   }
 
   openNewTaskDialog() {

@@ -9,8 +9,8 @@
 
   <div class="pending-container">
     <h2>What Needs to be Done...</h2>
-    <mat-selection-list #pendingTasks>
-      <mat-list-option *ngFor="let task of tasks">
+    <mat-selection-list #matPendingTasks>
+      <mat-list-option *ngFor="let task of pendingTasks">
         <mat-card>
           <mat-card-title-group>
             <mat-card-title>
@@ -35,7 +35,7 @@
     </mat-selection-list>
     <p class="selected-text">
       Selected to Mark as Done:{{
-        pendingTasks.selectedOptions.selected.length
+        matPendingTasks.selectedOptions.selected.length
       }}
     </p>
   </div>
