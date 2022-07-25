@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   tasks: Task[] = [];
   doneTasks: Task[] = [];
   pendingTasks: Task[] = [];
+  selectedTasks: Task[] = [];
 
   constructor(private api: Api, private dialog: MatDialog) {}
 
@@ -30,6 +31,12 @@ export class DashboardComponent implements OnInit {
       } else {
         this.pendingTasks.push(task);
       }
+    }
+  }
+
+  markAsDone() {
+    for (let task of this.selectedTasks) {
+      task.status = true;
     }
   }
 

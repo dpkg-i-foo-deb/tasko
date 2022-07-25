@@ -3,7 +3,8 @@
   flex-direction: column;
 }
 
-.title-text {
+.title-text,
+.done-text {
   font-weight: bold;
   font-size: large;
 }
@@ -70,4 +71,10 @@
 
 .done-card {
   margin-right: 30px;
+}
+
+.mark-button {
+  margin-top: 5px;
+  margin-left: 12px;
+  font-weight: bold;
 }

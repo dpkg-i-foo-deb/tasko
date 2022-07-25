@@ -9,8 +9,8 @@
 
   <div class="pending-container">
     <h2 class="title-text">What Needs to be Done...</h2>
-    <mat-selection-list #matPendingTasks>
-      <mat-list-option *ngFor="let task of pendingTasks">
+    <mat-selection-list #matPendingTasks [(ngModel)]="selectedTasks">
+      <mat-list-option *ngFor="let task of pendingTasks" [value]="task">
         <mat-card>
           <mat-card-title-group>
             <mat-card-title>
@@ -34,15 +34,21 @@
       </mat-list-option>
     </mat-selection-list>
     <p class="selected-text">
-      Selected to Mark as Done:{{
-        matPendingTasks.selectedOptions.selected.length
-      }}
+      Selected:{{ matPendingTasks.selectedOptions.selected.length }}
     </p>
+    <button
+      class="mark-button"
+      mat-raised-button
+      color="warn"
+      (click)="markAsDone()"
+    >
+      Mark as Done
+    </button>
   </div>
 </div>
 <mat-divider></mat-divider>
 <div class="done-container">
-  <h2>What is Already Done...</h2>
+  <h2 class="done-text">What is Already Done...</h2>
   <mat-list #matDoneTasks>
     <mat-list-item class="done-task" *ngFor="let task of doneTasks">
       <mat-card class="done-card">
