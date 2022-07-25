@@ -87,4 +87,8 @@ export class DashboardComponent implements OnInit {
       width: '350px',
     });
   }
+
+  onEvent(event: any) {
+    event.stopPropagation();
+  }
 }

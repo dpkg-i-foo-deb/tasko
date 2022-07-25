@@ -1,19 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 
 //Weird stuffies
-import { DomSanitizer } from '@angular/platform-browser'
+import { DomSanitizer } from '@angular/platform-browser';
 
 //Material stuffies
-import { MatIconRegistry } from '@angular/material/icon'
+import { MatIconRegistry } from '@angular/material/icon';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-
   @ViewChild('sidenav', { static: true })
   sidenav!: MatSidenav;
 
@@ -26,22 +25,32 @@ export class AppComponent {
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/menu.svg')
     );
 
-    this.matIconRegistry.addSvgIcon('home',
+    this.matIconRegistry.addSvgIcon(
+      'home',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/home.svg')
     );
 
-    this.matIconRegistry.addSvgIcon('login',
+    this.matIconRegistry.addSvgIcon(
+      'login',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/login.svg')
     );
 
-    this.matIconRegistry.addSvgIcon('sign-up',
+    this.matIconRegistry.addSvgIcon(
+      'sign-up',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/sign-up.svg')
     );
 
-    this.matIconRegistry.addSvgIcon('dashboard',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/dashboard.svg')
+    this.matIconRegistry.addSvgIcon(
+      'dashboard',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/dashboard.svg'
+      )
     );
 
+    this.matIconRegistry.addSvgIcon(
+      'edit',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/edit.svg')
+    );
   }
 
   title = 'tasko';
