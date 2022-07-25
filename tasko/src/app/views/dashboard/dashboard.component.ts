@@ -3,6 +3,7 @@ import { Api } from 'src/app/api/api';
 import { MatDialog } from '@angular/material/dialog';
 import { NewTaskDialogComponent } from '../dialogs/new-task-dialog/new-task-dialog.component';
 import { Task } from 'src/app/models/task';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,6 +38,19 @@ export class DashboardComponent implements OnInit {
   markAsDone() {
     for (let task of this.selectedTasks) {
       task.status = true;
+
+      this.api
+        .updateTask(task)
+        .pipe()
+        .subscribe({
+          next: () => {},
+
+          error: (error: HttpErrorResponse) => {
+            console.log(error);
+          },
+
+          complete: () => {},
+        });
     }
   }
 

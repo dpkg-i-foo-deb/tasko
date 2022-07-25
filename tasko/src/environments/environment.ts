@@ -10,7 +10,8 @@ export const environment = {
   pingPath: '',
   refreshPath: 'refresh',
   getTasksPath: 'tasks',
-  createTaskPath: 'tasks'
+  createTaskPath: 'tasks',
+  updateTaskPath: 'tasks',
 };
 
 /*
