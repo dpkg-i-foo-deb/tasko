@@ -8,7 +8,7 @@
   </div>
 
   <div class="pending-container">
-    <h2>What Needs to be Done...</h2>
+    <h2 class="title-text">What Needs to be Done...</h2>
     <mat-selection-list #matPendingTasks>
       <mat-list-option *ngFor="let task of pendingTasks">
         <mat-card>
@@ -39,4 +39,32 @@
       }}
     </p>
   </div>
+</div>
+<mat-divider></mat-divider>
+<div class="done-container">
+  <h2>What is Already Done...</h2>
+  <mat-selection-list #matDoneTasks>
+    <mat-list-option *ngFor="let task of doneTasks">
+      <mat-card>
+        <mat-card-title-group>
+          <mat-card-title>
+            {{ task.title }}
+          </mat-card-title>
+          <mat-card-subtitle>
+            {{ task.description }}
+          </mat-card-subtitle>
+        </mat-card-title-group>
+        <mat-card-content>
+          <mat-chip-list>
+            <mat-chip selected color="primary">
+              Started: {{ task.start_date }}
+            </mat-chip>
+            <mat-chip selected color="accent"
+              >To be Done: {{ task.due_date }}</mat-chip
+            >
+          </mat-chip-list>
+        </mat-card-content>
+      </mat-card>
+    </mat-list-option>
+  </mat-selection-list>
 </div>
