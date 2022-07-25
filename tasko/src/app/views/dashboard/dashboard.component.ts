@@ -31,6 +31,10 @@ export class DashboardComponent implements OnInit {
   }
 
   organizeTasks() {
+    this.doneTasks = [];
+
+    this.pendingTasks = [];
+
     for (let task of this.tasks) {
       if (task.status) {
         this.doneTasks.push(task);
@@ -61,8 +65,20 @@ export class DashboardComponent implements OnInit {
             console.log(error);
           },
 
-          complete: () => {},
+          complete: () => {
+            this.updateTask(task);
+          },
         });
+    }
+
+    this.organizeTasks();
+  }
+
+  updateTask(task: Task) {
+    let index = this.tasks.indexOf(task);
+
+    if (index !== -1) {
+      this.tasks[index] = task;
     }
   }
 
