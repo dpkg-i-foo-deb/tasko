@@ -42,20 +42,6 @@
         ></mat-datepicker-toggle>
         <mat-datepicker #dueDatePicker></mat-datepicker>
       </mat-form-field>
-
-      <mat-form-field>
-        <input
-          matInput
-          [ngxMatDatetimePicker]="picker"
-          placeholder="Choose a date"
-        />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="$any(picker)"
-        ></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #picker> </ngx-mat-datetime-picker>
-      </mat-form-field>
-
       <div class="center margin-top">
         <button mat-raised-button color="primary" type="submit">Submit!</button>
       </div>
