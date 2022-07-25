@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  onEvent(event: any) {
+  editTask(event: any) {
     event.stopPropagation();
   }
 }
