@@ -22,15 +22,15 @@ func InitTaskStatements() {
 		log.Fatal("Couldn't initialize task statements ", err)
 	}
 
-	GetTaskStatement, err = Database.Prepare(`SELECT title, description, code, main_task, user_email, to_char(start_date,'YYYY-MM-DD HH:SS'),
-											to_char(due_date,'YYYY-MM-DD HH:SS'), status
+	GetTaskStatement, err = Database.Prepare(`SELECT title, description, code, main_task, user_email, to_char(start_date,'YYYY-MM-DD'),
+											to_char(due_date,'YYYY-MM-DD'), status
 											FROM public.task t WHERE t.code=$1 AND t.user_email =$2`)
 
 	if err != nil {
 		log.Fatal("Couldn't initialize task statements ", err)
 	}
-	GetAllTasksStatement, err = Database.Prepare(`SELECT title, description, code, main_task, user_email, to_char(start_date,'YYYY-MM-DD HH:SS'), 
-													to_char(due_date,'YYYY-MM-DD HH:SS'), status
+	GetAllTasksStatement, err = Database.Prepare(`SELECT title, description, code, main_task, user_email, to_char(start_date,'YYYY-MM-DD'), 
+													to_char(due_date,'YYYY-MM-DD'), status
 													FROM public.task t WHERE t.user_email = $1`)
 
 	if err != nil {
