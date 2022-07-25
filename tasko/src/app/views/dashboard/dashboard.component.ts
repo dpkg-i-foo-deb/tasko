@@ -5,6 +5,7 @@ import { NewTaskDialogComponent } from '../dialogs/new-task-dialog/new-task-dial
 import { Task } from 'src/app/models/task';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HotToastService } from '@ngneat/hot-toast';
+import { EditTaskDialog } from '../dialogs/edit-task-dialog/edit-task-dialog';
 
 @Component({
   selector: 'app-dashboard',
@@ -88,7 +89,15 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  openEditTaskDialog() {
+    this.dialog.open(EditTaskDialog, {
+      width: '350px',
+    });
+  }
+
   editTask(event: any) {
     event.stopPropagation();
+
+    this.openEditTaskDialog();
   }
 }
