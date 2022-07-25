@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NewTaskDialogComponent } from '../dialogs/new-task-dialog/new-task-dialog.component';
 import { Task } from 'src/app/models/task';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,11 @@ export class DashboardComponent implements OnInit {
   pendingTasks: Task[] = [];
   selectedTasks: Task[] = [];
 
-  constructor(private api: Api, private dialog: MatDialog) {}
+  constructor(
+    private api: Api,
+    private dialog: MatDialog,
+    private toast: HotToastService
+  ) {}
 
   ngOnInit(): void {
     this.api.getAllTasks().subscribe((response) => {
@@ -41,11 +46,18 @@ export class DashboardComponent implements OnInit {
 
       this.api
         .updateTask(task)
-        .pipe()
+        .pipe(
+          this.toast.observe({
+            success: 'Done!',
+            loading: 'Marking Tasks...',
+            error: 'Failed!',
+          })
+        )
         .subscribe({
           next: () => {},
 
           error: (error: HttpErrorResponse) => {
+            this.toast.show('Could not mark as done!');
             console.log(error);
           },
 
