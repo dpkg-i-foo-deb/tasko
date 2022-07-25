@@ -25,6 +25,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule,
+} from '@angular-material-components/datetime-picker';
 
 //Other stuffies
 import { HotToastModule } from '@ngneat/hot-toast';
@@ -67,6 +72,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatListModule,
     MatCardModule,
     MatChipsModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
   ],
 
   providers: [

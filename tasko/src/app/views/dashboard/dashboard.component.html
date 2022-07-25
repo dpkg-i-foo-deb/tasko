@@ -9,8 +9,8 @@
 
   <div class="pending-container">
     <h2>What Needs to be Done...</h2>
-    <mat-list #pendingTasks>
-      <mat-list-item *ngFor="let task of tasks">
+    <mat-selection-list #pendingTasks>
+      <mat-list-option *ngFor="let task of tasks">
         <mat-card>
           <mat-card-title-group>
             <mat-card-title>
@@ -31,7 +31,7 @@
             </mat-chip-list>
           </mat-card-content>
         </mat-card>
-      </mat-list-item>
-    </mat-list>
+      </mat-list-option>
+    </mat-selection-list>
   </div>
 </div>
