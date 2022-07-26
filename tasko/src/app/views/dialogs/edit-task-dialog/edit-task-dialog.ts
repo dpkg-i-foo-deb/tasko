@@ -27,8 +27,32 @@ export class EditTaskDialog implements OnInit {
   ngOnInit(): void {}
 
   editTask() {
-    if (this.editTaskForm.valid) {
-      this.api.updateTask(this.task);
+    if (!this.editTaskForm.valid) {
+      return;
     }
+
+    this.task.title = this.editTaskForm.controls['title'].value ?? '';
+    this.task.description = this.editTaskForm.controls['title'].value ?? '';
+    this.task.start_date = this.editTaskForm.controls['startDate'].value ?? '';
+    this.task.due_date = this.editTaskForm.controls['dueDate'].value ?? '';
+
+    this.api
+      .updateTask(this.task)
+      .pipe(
+        this.toast.observe({
+          success: 'Edited Successfully!',
+          loading: 'Editing...',
+          error: 'Something Went Wrong. Try Again!',
+        })
+      )
+      .subscribe({
+        next: () => {},
+        error: () => {
+          this.toast.show('Failed to Edit the Task!');
+        },
+        complete: () => {
+          this.dialogRef.close({ data: this.task });
+        },
+      });
   }
 }

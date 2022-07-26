@@ -102,8 +102,9 @@ export class DashboardComponent implements OnInit {
       data: task,
     });
 
-    dialogRef.afterClosed().subscribe((data) => {
-      //TODO do something with the data
+    dialogRef.afterClosed().subscribe((data: Task) => {
+      this.updateTask(data);
+      this.organizeTasks();
     });
   }
 }
