@@ -43,8 +43,6 @@ export class NewTaskDialogComponent implements OnInit {
       task.start_date = this.newTaskForm.controls['startDate'].value ?? '';
       task.due_date = this.newTaskForm.controls['dueDate'].value ?? '';
 
-      console.log('oli');
-
       this.api
         .createTask(task)
         .pipe(
