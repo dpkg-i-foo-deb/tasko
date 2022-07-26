@@ -27,42 +27,44 @@ export class NewTaskDialogComponent implements OnInit {
   ngOnInit(): void {}
 
   createTask() {
-    let task: Task = {
-      code: 0,
-      title: '',
-      description: '',
-      start_date: '',
-      due_date: '',
-      status: false,
-      user_email: '',
-    };
+    if (this.newTaskForm.valid) {
+      let task: Task = {
+        code: 0,
+        title: '',
+        description: '',
+        start_date: '',
+        due_date: '',
+        status: false,
+        user_email: '',
+      };
 
-    task.title = this.newTaskForm.controls['title'].value ?? '';
-    task.description = this.newTaskForm.controls['description'].value ?? '';
-    task.start_date = this.newTaskForm.controls['startDate'].value ?? '';
-    task.due_date = this.newTaskForm.controls['dueDate'].value ?? '';
+      task.title = this.newTaskForm.controls['title'].value ?? '';
+      task.description = this.newTaskForm.controls['description'].value ?? '';
+      task.start_date = this.newTaskForm.controls['startDate'].value ?? '';
+      task.due_date = this.newTaskForm.controls['dueDate'].value ?? '';
 
-    console.log('oli');
+      console.log('oli');
 
-    this.api
-      .createTask(task)
-      .pipe(
-        this.toast.observe({
-          success: 'Task Created Successfully!',
-          loading: 'Creating new Task...',
-          error: 'Failed!',
-        })
-      )
-      .subscribe({
-        next: () => {},
+      this.api
+        .createTask(task)
+        .pipe(
+          this.toast.observe({
+            success: 'Task Created Successfully!',
+            loading: 'Creating new Task...',
+            error: 'Failed!',
+          })
+        )
+        .subscribe({
+          next: () => {},
 
-        error: () => {
-          this.toast.show('Could not Create the Task!');
-        },
+          error: () => {
+            this.toast.show('Could not Create the Task!');
+          },
 
-        complete: () => {
-          this.dialogRef.close();
-        },
-      });
+          complete: () => {
+            this.dialogRef.close();
+          },
+        });
+    }
   }
 }
