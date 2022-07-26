@@ -32,7 +32,8 @@ export class EditTaskDialog implements OnInit {
     }
 
     this.task.title = this.editTaskForm.controls['title'].value ?? '';
-    this.task.description = this.editTaskForm.controls['title'].value ?? '';
+    this.task.description =
+      this.editTaskForm.controls['description'].value ?? '';
     this.task.start_date = this.editTaskForm.controls['startDate'].value ?? '';
     this.task.due_date = this.editTaskForm.controls['dueDate'].value ?? '';
 
