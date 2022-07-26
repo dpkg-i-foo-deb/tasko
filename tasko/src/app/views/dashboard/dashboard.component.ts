@@ -95,9 +95,15 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  editTask(event: any) {
+  editTask(event: any, code: number) {
     event.stopPropagation();
+    let task = this.tasks.find((object) => object.code == code);
+    let dialogRef = this.dialog.open(EditTaskDialog, {
+      data: task,
+    });
 
-    this.openEditTaskDialog();
+    dialogRef.afterClosed().subscribe((data) => {
+      //TODO do something with the data
+    });
   }
 }

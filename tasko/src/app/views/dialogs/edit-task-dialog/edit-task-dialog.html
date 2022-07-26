@@ -1,1 +1,50 @@
-<p>edit-task-dialog works!</p>
+<h1 mat-dialog-title>Edit Task!</h1>
+
+<div mat-dialog-content>
+  <div class="form-container">
+    <form [formGroup]="editTaskForm" (ngSubmit)="editTask()">
+      <mat-form-field>
+        <input matInput placeholder="Title" formControlName="title" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Description"
+          formControlName="description"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="startDatePicker"
+          placeholder="Start Date"
+          formControlName="startDate"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="startDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="dueDatePicker"
+          placeholder="Due Date"
+          formControlName="dueDate"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="dueDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #dueDatePicker></mat-datepicker>
+      </mat-form-field>
+      <div class="center margin-top">
+        <button mat-raised-button color="primary" type="submit">Submit!</button>
+      </div>
+    </form>
+  </div>
+</div>
