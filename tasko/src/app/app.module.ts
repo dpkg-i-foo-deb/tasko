@@ -38,6 +38,7 @@ import { NewTaskDialogComponent } from './views/dialogs/new-task-dialog/new-task
 import { MatNativeDateModule } from '@angular/material/core';
 import { EditTaskDialog } from './views/dialogs/edit-task-dialog/edit-task-dialog';
 import { DatePipe } from '@angular/common';
+import { DeleteTaskDialogComponent } from './views/dialogs/delete-task-dialog/delete-task-dialog.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { DatePipe } from '@angular/common';
     DashboardComponent,
     NewTaskDialogComponent,
     EditTaskDialog,
+    DeleteTaskDialogComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { Task } from 'src/app/models/task';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HotToastService } from '@ngneat/hot-toast';
 import { EditTaskDialog } from '../dialogs/edit-task-dialog/edit-task-dialog';
+import { DeleteTaskDialogComponent } from '../dialogs/delete-task-dialog/delete-task-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -42,6 +43,14 @@ export class DashboardComponent implements OnInit {
       } else {
         this.pendingTasks.push(task);
       }
+    }
+  }
+
+  removeTask(task: Task) {
+    const index = this.tasks.indexOf(task);
+
+    if (index > -1) {
+      this.tasks.splice(index, 1);
     }
   }
 
@@ -104,6 +113,20 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((data: Task) => {
       this.updateTask(data);
+      this.organizeTasks();
+    });
+  }
+
+  deleteTask(event: any, code: number) {
+    event.stopPropagation();
+
+    let task = this.tasks.find((object) => object.code == code);
+
+    let dialogRef = this.dialog.open(DeleteTaskDialogComponent, { data: task });
+
+    dialogRef.afterClosed().subscribe((data: Task) => {
+      this.removeTask(data);
+
       this.organizeTasks();
     });
   }
