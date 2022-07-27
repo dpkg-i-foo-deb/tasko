@@ -91,8 +91,7 @@ export class DashboardComponent implements OnInit {
   }
 
   addTask(task: Task) {
-    let newTask: Task = task;
-    this.tasks.push(newTask);
+    this.tasks.push(task);
   }
 
   openNewTaskDialog() {
