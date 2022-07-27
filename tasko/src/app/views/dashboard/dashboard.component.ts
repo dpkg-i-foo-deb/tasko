@@ -90,15 +90,42 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  addTask(task: Task) {
+    let newTask: Task = task;
+    this.tasks.push(newTask);
+  }
+
   openNewTaskDialog() {
-    this.dialog.open(NewTaskDialogComponent, {
+    let dialogRef = this.dialog.open(NewTaskDialogComponent, {
       width: '350px',
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (data: any) => {
+        let newTask: Task = {
+          title: data.data.title,
+          description: data.data.description,
+          code: data.data.code,
+          start_date: data.data.start_date,
+          due_date: data.data.due_date,
+          status: data.data.status,
+          user_email: data.data.user_email,
+        };
+
+        this.addTask(newTask);
+        this.organizeTasks();
+      },
     });
   }
 
   openEditTaskDialog() {
-    this.dialog.open(EditTaskDialog, {
+    let dialogRef = this.dialog.open(EditTaskDialog, {
       width: '350px',
+    });
+
+    dialogRef.afterClosed().subscribe((data: Task) => {
+      this.addTask(data);
+      this.organizeTasks();
     });
   }
 

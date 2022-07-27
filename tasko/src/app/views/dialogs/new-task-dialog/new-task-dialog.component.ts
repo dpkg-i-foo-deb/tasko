@@ -18,6 +18,8 @@ export class NewTaskDialogComponent implements OnInit {
     dueDate: new FormControl('', [Validators.required]),
   });
 
+  newTask!: Task;
+
   constructor(
     private api: Api,
     private toast: HotToastService,
@@ -53,14 +55,16 @@ export class NewTaskDialogComponent implements OnInit {
           })
         )
         .subscribe({
-          next: () => {},
+          next: (task: Task) => {
+            this.newTask = task ?? {};
+          },
 
           error: () => {
             this.toast.show('Could not Create the Task!');
           },
 
           complete: () => {
-            this.dialogRef.close();
+            this.dialogRef.close({ data: this.newTask });
           },
         });
     }

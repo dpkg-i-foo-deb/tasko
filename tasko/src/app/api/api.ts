@@ -87,8 +87,8 @@ export class Api {
     );
   }
 
-  createTask(task: Task): Observable<any> {
-    return this.http.put<any>(
+  createTask(task: Task): Observable<Task> {
+    return this.http.put<Task>(
       environment.apiUrl + environment.createTaskPath,
       task,
       this.createTaskOptions
