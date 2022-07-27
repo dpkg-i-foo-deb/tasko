@@ -51,6 +51,11 @@ export class AppComponent {
       'edit',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/edit.svg')
     );
+
+    this.matIconRegistry.addSvgIcon(
+      'delete',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/delete.svg')
+    );
   }
 
   title = 'tasko';
