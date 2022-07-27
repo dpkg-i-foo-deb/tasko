@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -21,7 +22,8 @@ export class EditTaskDialog implements OnInit {
     @Inject(MAT_DIALOG_DATA) public task: Task,
     private dialogRef: MatDialogRef<EditTaskDialog>,
     private api: Api,
-    private toast: HotToastService
+    private toast: HotToastService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {}
@@ -31,11 +33,22 @@ export class EditTaskDialog implements OnInit {
       return;
     }
 
+    let formattedDate = new Date(
+      this.editTaskForm.controls.startDate.value ?? ''
+    );
+
+    let newDate = this.datePipe.transform(formattedDate, 'yyyy-MM-dd');
+
     this.task.title = this.editTaskForm.controls['title'].value ?? '';
     this.task.description =
       this.editTaskForm.controls['description'].value ?? '';
-    this.task.start_date = this.editTaskForm.controls['startDate'].value ?? '';
-    this.task.due_date = this.editTaskForm.controls['dueDate'].value ?? '';
+    this.task.start_date = newDate ?? '';
+
+    formattedDate = new Date(this.editTaskForm.controls.dueDate.value ?? '');
+
+    newDate = this.datePipe.transform(formattedDate, 'yyyy-MM-dd');
+
+    this.task.due_date = newDate ?? '';
 
     this.api
       .updateTask(this.task)

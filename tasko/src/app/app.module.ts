@@ -37,6 +37,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { NewTaskDialogComponent } from './views/dialogs/new-task-dialog/new-task-dialog.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EditTaskDialog } from './views/dialogs/edit-task-dialog/edit-task-dialog';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { EditTaskDialog } from './views/dialogs/edit-task-dialog/edit-task-dialo
       multi: true,
     },
     CookieService,
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })
