@@ -47,11 +47,9 @@ export class DashboardComponent implements OnInit {
   }
 
   removeTask(task: Task) {
-    const index = this.tasks.indexOf(task);
-
-    if (index > -1) {
-      this.tasks.splice(index, 1);
-    }
+    this.tasks = this.tasks.filter(function (object) {
+      return object.code !== task.code!;
+    });
   }
 
   markAsDone() {
@@ -124,10 +122,11 @@ export class DashboardComponent implements OnInit {
 
     let dialogRef = this.dialog.open(DeleteTaskDialogComponent, { data: task });
 
-    dialogRef.afterClosed().subscribe((data: Task) => {
-      this.removeTask(data);
-
-      this.organizeTasks();
+    dialogRef.afterClosed().subscribe({
+      next: (data: Task) => {
+        this.removeTask(task!);
+        this.organizeTasks();
+      },
     });
   }
 }

@@ -1,1 +1,9 @@
-<p>delete-task-dialog works!</p>
+<h2 mat-dialog-title>Do you want to Delete it?</h2>
+<mat-dialog-content>
+  <h3>This Action Cannot be Undone!</h3>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close cdkFocusInitial>No</button>
+  <button mat-button (click)="delete()">Yes!</button>
+</mat-dialog-actions>
