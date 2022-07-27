@@ -44,6 +44,10 @@ export class Api {
     withCredentials: true,
   };
 
+  deleteTaskOptions = {
+    withCredentials: true,
+  };
+
   constructor(private http: HttpClient) {}
 
   login(user: User): Observable<LoginResponse> {
@@ -95,6 +99,13 @@ export class Api {
     return this.http.patch<any>(
       environment.apiUrl + environment.updateTaskPath + '/' + task.code,
       task,
+      this.updateTaskOptions
+    );
+  }
+
+  deleteTask(task: Task): Observable<any> {
+    return this.http.delete<any>(
+      environment.apiUrl + environment.updateTaskPath + '/' + task.code,
       this.updateTaskOptions
     );
   }

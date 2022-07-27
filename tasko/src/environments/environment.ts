@@ -12,6 +12,7 @@ export const environment = {
   getTasksPath: 'tasks',
   createTaskPath: 'tasks',
   updateTaskPath: 'tasks',
+  deleteTaskPath: 'tasks',
 };
 
 /*
