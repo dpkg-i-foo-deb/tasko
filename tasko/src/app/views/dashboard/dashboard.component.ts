@@ -78,6 +78,33 @@ export class DashboardComponent implements OnInit {
 
     this.organizeTasks();
   }
+  markAsPending(task: Task) {
+    task.status = false;
+
+    this.api
+      .updateTask(task)
+      .pipe(
+        this.toast.observe({
+          success: 'Done!',
+          loading: 'Marking Tasks...',
+          error: 'Failed!',
+        })
+      )
+      .subscribe({
+        next: () => {},
+
+        error: (error: HttpErrorResponse) => {
+          this.toast.show('Could not mark as done!');
+          console.log(error);
+        },
+
+        complete: () => {
+          this.updateTask(task);
+        },
+      });
+
+    this.organizeTasks();
+  }
 
   updateTask(task: Task) {
     let index = this.tasks.indexOf(task);
