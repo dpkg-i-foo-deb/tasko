@@ -69,6 +69,20 @@
       <mat-card class="done-card">
         <div class="button-container">
           <button
+            class="pending-button"
+            mat-mini-fab
+            (click)="deleteTask($event, task.code)"
+          >
+            <mat-icon svgIcon="pending"></mat-icon>
+          </button>
+          <button
+            class="edit-button"
+            mat-mini-fab
+            (click)="editTask($event, task.code)"
+          >
+            <mat-icon svgIcon="edit"></mat-icon>
+          </button>
+          <button
             class="delete-button"
             mat-mini-fab
             (click)="deleteTask($event, task.code)"

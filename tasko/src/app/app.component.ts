@@ -61,6 +61,11 @@ export class AppComponent {
       'mark',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/check.svg')
     );
+
+    this.matIconRegistry.addSvgIcon(
+      'pending',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/clock.svg')
+    );
   }
 
   title = 'tasko';

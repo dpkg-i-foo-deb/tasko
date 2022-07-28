@@ -68,7 +68,6 @@
 }
 
 .done-task {
-  margin-top: 50px;
   margin-bottom: 120px;
 }
 
@@ -86,7 +85,8 @@
 
 .edit-button,
 .delete-button,
-.check-button {
+.check-button,
+.pending-butotn {
   width: 40px;
   height: 40px;
   left: 15px;
@@ -103,4 +103,9 @@
 
 .check-button {
   background-color: green;
+}
+
+.pending-button {
+  background-color: coral;
+  margin-right: -5px;
 }
