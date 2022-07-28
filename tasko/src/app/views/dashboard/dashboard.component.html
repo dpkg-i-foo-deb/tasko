@@ -9,7 +9,7 @@
 
   <div class="pending-container">
     <h2 class="title-text">What Needs to be Done...</h2>
-    <mat-list #matPendingTasks>
+    <mat-list>
       <mat-list-item *ngFor="let task of pendingTasks">
         <mat-card>
           <div class="button-container">
@@ -67,16 +67,19 @@
   <mat-list #matDoneTasks>
     <mat-list-item class="done-task" *ngFor="let task of doneTasks">
       <mat-card class="done-card">
+        <div class="button-container">
+          <button
+            class="delete-button"
+            mat-mini-fab
+            (click)="deleteTask($event, task.code)"
+          >
+            <mat-icon svgIcon="delete"></mat-icon>
+          </button>
+        </div>
+
         <mat-card-title-group>
           <mat-card-title>
             {{ task.title }}
-            <button
-              class="delete-button"
-              mat-mini-fab
-              (click)="deleteTask($event, task.code)"
-            >
-              <mat-icon svgIcon="delete"></mat-icon>
-            </button>
           </mat-card-title>
           <mat-card-subtitle>
             {{ task.description }}
