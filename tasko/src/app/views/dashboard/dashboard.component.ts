@@ -17,7 +17,6 @@ export class DashboardComponent implements OnInit {
   tasks: Task[] = [];
   doneTasks: Task[] = [];
   pendingTasks: Task[] = [];
-  selectedTasks: Task[] = [];
 
   constructor(
     private api: Api,
@@ -52,32 +51,30 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  markAsDone() {
-    for (let task of this.selectedTasks) {
-      task.status = true;
+  markAsDone(task: Task) {
+    task.status = true;
 
-      this.api
-        .updateTask(task)
-        .pipe(
-          this.toast.observe({
-            success: 'Done!',
-            loading: 'Marking Tasks...',
-            error: 'Failed!',
-          })
-        )
-        .subscribe({
-          next: () => {},
+    this.api
+      .updateTask(task)
+      .pipe(
+        this.toast.observe({
+          success: 'Done!',
+          loading: 'Marking Tasks...',
+          error: 'Failed!',
+        })
+      )
+      .subscribe({
+        next: () => {},
 
-          error: (error: HttpErrorResponse) => {
-            this.toast.show('Could not mark as done!');
-            console.log(error);
-          },
+        error: (error: HttpErrorResponse) => {
+          this.toast.show('Could not mark as done!');
+          console.log(error);
+        },
 
-          complete: () => {
-            this.updateTask(task);
-          },
-        });
-    }
+        complete: () => {
+          this.updateTask(task);
+        },
+      });
 
     this.organizeTasks();
   }
