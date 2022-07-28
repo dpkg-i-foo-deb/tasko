@@ -66,6 +66,11 @@ export class AppComponent {
       'pending',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/clock.svg')
     );
+
+    this.matIconRegistry.addSvgIcon(
+      'sign-out',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/sign-out.svg')
+    );
   }
 
   title = 'tasko';
