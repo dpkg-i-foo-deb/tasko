@@ -8,6 +8,8 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Api } from './api/api';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HotToastService } from '@ngneat/hot-toast';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +23,9 @@ export class AppComponent {
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
-    private api: Api
+    private api: Api,
+    private toast: HotToastService,
+    private router: Router
   ) {
     this.matIconRegistry.addSvgIcon(
       'menu',
@@ -91,12 +95,25 @@ export class AppComponent {
   }
 
   signOut() {
-    this.api.signOut().subscribe({
-      next: () => {},
-      error: (error: HttpErrorResponse) => {
-        console.log(error);
-      },
-      complete: () => {},
-    });
+    this.api
+      .signOut()
+      .pipe(
+        this.toast.observe({
+          loading: 'Signing out...',
+          error: 'Something went Wrong',
+          success: 'Signed Out!',
+        })
+      )
+      .subscribe({
+        next: () => {},
+        error: (error: HttpErrorResponse) => {
+          console.log(error);
+          this.toast.show('Could not Sign Out, Try Again!');
+        },
+        complete: () => {
+          this.router.navigate(['/home']);
+          this.toggleNavBar();
+        },
+      });
   }
 }
