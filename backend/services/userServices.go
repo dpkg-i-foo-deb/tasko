@@ -140,6 +140,31 @@ func LoginService(writer http.ResponseWriter, request *http.Request) {
 
 }
 
+func SignOutService(writer http.ResponseWriter, request *http.Request, bodyBytes []byte) {
+	var response utils.GenericResponse
+
+	var newRefreshCookie *http.Cookie
+	var newAcessCookie *http.Cookie
+
+	//Create the new cookies
+
+	newAcessCookie = auth.GenerateFakeAccessCookie()
+	newRefreshCookie = auth.GenerateFakeRefreshCookie()
+
+	//Set the new cookies
+
+	http.SetCookie(writer, newAcessCookie)
+	http.SetCookie(writer, newRefreshCookie)
+
+	writer.WriteHeader(http.StatusOK)
+
+	response.Response = "Signed Out..."
+	json.NewEncoder(writer).Encode(response)
+
+	return
+
+}
+
 func RefreshToken(writer http.ResponseWriter, request *http.Request) {
 
 	//We enable CORS to allow the frontend to make requests
