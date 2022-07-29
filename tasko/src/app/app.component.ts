@@ -6,6 +6,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 //Material stuffies
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Api } from './api/api';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +20,8 @@ export class AppComponent {
 
   constructor(
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private api: Api
   ) {
     this.matIconRegistry.addSvgIcon(
       'menu',
@@ -85,5 +88,15 @@ export class AppComponent {
 
   toggleNavBar() {
     this.sidenav.toggle();
+  }
+
+  signOut() {
+    this.api.signOut().subscribe({
+      next: () => {},
+      error: (error: HttpErrorResponse) => {
+        console.log(error);
+      },
+      complete: () => {},
+    });
   }
 }

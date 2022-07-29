@@ -13,6 +13,7 @@ export const environment = {
   createTaskPath: 'tasks',
   updateTaskPath: 'tasks',
   deleteTaskPath: 'tasks',
+  signOutPath: 'sign-out',
 };
 
 /*

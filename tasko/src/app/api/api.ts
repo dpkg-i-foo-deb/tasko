@@ -48,6 +48,10 @@ export class Api {
     withCredentials: true,
   };
 
+  signOutOptions = {
+    withCredentials: true,
+  };
+
   constructor(private http: HttpClient) {}
 
   login(user: User): Observable<LoginResponse> {
@@ -107,6 +111,14 @@ export class Api {
     return this.http.delete<any>(
       environment.apiUrl + environment.updateTaskPath + '/' + task.code,
       this.updateTaskOptions
+    );
+  }
+
+  signOut(): Observable<any> {
+    return this.http.post<any>(
+      environment.apiUrl + environment.signOutPath,
+      'sign-out',
+      this.signOutOptions
     );
   }
 }

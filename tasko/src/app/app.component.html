@@ -25,9 +25,9 @@
         </mat-icon>
         <span class="text-container">Tasks</span>
       </a>
-      <a mat-list-item routerLink="/dashboard">
+      <a mat-list-item (click)="signOut()">
         <mat-icon
-          class="dashboard-icon"
+          class="signout-icon"
           svgIcon="sign-out"
           [ngStyle]="{ color: 'black' }"
         >
@@ -43,4 +43,3 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
