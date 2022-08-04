@@ -8,52 +8,37 @@ import (
 	"bytes"
 	"database/sql"
 	"encoding/json"
+	"errors"
+	"github.com/gofiber/fiber/v2"
 	"io/ioutil"
-	"log"
-	"net/http"
-	"strconv"
-
-	"github.com/gorilla/mux"
 )
 
-func CreateTaskService(writer http.ResponseWriter, request *http.Request, bodyBytes []byte) {
+func CreateTaskService(connection *fiber.Ctx) error {
 
 	var task *models.Task
 	var tokenString string
-	//Use the incoming request body bytes instead of the request which is already closed
-	decoder := json.NewDecoder(ioutil.NopCloser(bytes.NewBuffer(bodyBytes)))
-
+	decoder := json.NewDecoder(ioutil.NopCloser(bytes.NewBuffer(connection.Body())))
+	var response utils.GenericResponse
 	err := decoder.Decode(&task)
 
 	if err != nil {
-		log.Print("Could not decode incoming create task request ", err)
-		writer.WriteHeader(http.StatusInternalServerError)
-		return
+
+		response.Response = "The task is malformed"
+		connection.Status(fiber.StatusBadRequest).JSON(response)
+		return nil
+
 	}
 
-	tokenString, err = auth.GetCookieValue(request, "access-token")
-
-	if err != nil {
-		log.Print("Could not retrieve the token string ", err)
-		writer.WriteHeader(http.StatusInternalServerError)
-		return
-	}
+	tokenString = connection.Cookies("access-token")
 
 	//We retrieve the token string from the request cookie
 	task.UserEmail = new(string)
 	*task.UserEmail, err = auth.EmailFromToken(tokenString)
 
 	if err != nil {
-		log.Print("Could not retrieve the user's identity ", err)
-		writer.WriteHeader(http.StatusInternalServerError)
-		return
-	}
 
-	//Finally, we set the task email using the claims
+		return errors.New("Could not create the task, try again later")
 
-	if err != nil {
-		log.Print("Could not retrieve the auth cookie", err)
-		writer.WriteHeader(http.StatusInternalServerError)
 	}
 
 	err = database.CreateTaskStatement.QueryRow(
@@ -65,50 +50,41 @@ func CreateTaskService(writer http.ResponseWriter, request *http.Request, bodyBy
 	)
 
 	if err != nil {
-		log.Print("Failed to create a new task ", err)
-		writer.WriteHeader(http.StatusInternalServerError)
-		return
+
+		return errors.New("Could not create the task, try again later")
+
 	}
 
-	writer.WriteHeader(http.StatusCreated)
-	json.NewEncoder(writer).Encode(task)
-
-	log.Print("New task created!")
-
+	connection.Status(fiber.StatusCreated).JSON(task)
+	return nil
 }
 
-func GetTaskService(writer http.ResponseWriter, request *http.Request, bodyBytes []byte) {
+func GetTaskService(connection *fiber.Ctx) error {
 
-	taskCode, err := strconv.ParseInt(mux.Vars(request)["code"], 10, 64)
-
+	var taskCode int
 	var tokenString string
 
 	var userEmail string
 
 	var task models.Task
 
-	var errorResponse utils.GenericResponse
+	var response utils.GenericResponse
 
-	if err != nil {
-		log.Print("The received code is not correct")
-		writer.WriteHeader(http.StatusBadRequest)
-		return
+	taskCode, err := connection.ParamsInt("code")
+
+	if taskCode == 0 || err != nil {
+
+		response.Response = "The received parameter is not valid"
+		connection.Status(fiber.StatusBadRequest).JSON(response)
+		return nil
 	}
 
-	tokenString, err = auth.GetCookieValue(request, "access-token")
-
-	if err != nil {
-		log.Print("Could not retrieve the access token")
-		writer.WriteHeader(http.StatusInternalServerError)
-		return
-	}
+	tokenString = connection.Cookies("access-token")
 
 	userEmail, err = auth.EmailFromToken(tokenString)
 
 	if err != nil {
-		log.Print("The token does not contain the user email")
-		writer.WriteHeader(http.StatusBadRequest)
-		return
+		return errors.New("Could not get the user's email from the token")
 	}
 
 	err = database.GetTaskStatement.QueryRow(
@@ -119,22 +95,17 @@ func GetTaskService(writer http.ResponseWriter, request *http.Request, bodyBytes
 	)
 
 	if err != nil {
-		log.Print("The queried task does not exist or the user has no access to it ", err)
 
-		errorResponse.Response = "The task does not exist or you have no access to it"
-
-		writer.WriteHeader(http.StatusNotFound)
-		json.NewEncoder(writer).Encode(errorResponse)
-
-		return
+		response.Response = "The task does not exist or you have no access to it"
+		connection.Status(fiber.StatusBadRequest).JSON(response)
+		return nil
 	}
 
-	writer.WriteHeader(http.StatusFound)
-	json.NewEncoder(writer).Encode(task)
-
+	connection.Status(fiber.StatusOK).JSON(task)
+	return nil
 }
 
-func GetAllTasksService(writer http.ResponseWriter, request *http.Request, bodyBytes []byte) {
+func GetAllTasksService(connection *fiber.Ctx) error {
 	var tokenString string
 
 	var userEmail string
@@ -143,68 +114,50 @@ func GetAllTasksService(writer http.ResponseWriter, request *http.Request, bodyB
 
 	var allTasks []models.Task
 
-	var errorResponse utils.GenericResponse
+	var response utils.GenericResponse
 
 	var rows *sql.Rows
 
-	tokenString, err := auth.GetCookieValue(request, "access-token")
+	tokenString = connection.Cookies("access-token")
+
+	userEmail, err := auth.EmailFromToken(tokenString)
 
 	if err != nil {
-		log.Print("Could not retrieve the access token")
-		writer.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
-	userEmail, err = auth.EmailFromToken(tokenString)
-
-	if err != nil {
-		log.Print("The token does not contain the user email")
-		writer.WriteHeader(http.StatusBadRequest)
-		return
+		return errors.New("Could not get the user's email from the token")
 	}
 
 	rows, err = database.GetAllTasksStatement.Query(userEmail)
 
 	if err != nil {
-		log.Print("Could not find any results for the request ", err)
-		writer.WriteHeader(http.StatusNotFound)
-
-		errorResponse.Response = "You have no tasks created"
-
-		writer.WriteHeader(http.StatusNotFound)
-		json.NewEncoder(writer).Encode(errorResponse)
-
-		return
+		response.Response = "You have no tasks created"
+		connection.Status(fiber.StatusOK).JSON(allTasks)
+		return nil
 	}
 
 	defer rows.Close()
-
 	for rows.Next() {
 		err = rows.Scan(&task.Title, &task.Description, &task.Code,
 			&task.MainTask, &task.UserEmail, &task.StartDate, &task.DueDate, &task.Status)
 
 		if err != nil {
-			log.Print("Could not retrieve the query result", err)
-			writer.WriteHeader(http.StatusInternalServerError)
-			return
+			return errors.New("Could not retrieve your tasks")
 		}
-
 		allTasks = append(allTasks, task)
+
 	}
 
 	err = rows.Err()
 
 	if err != nil {
-		log.Print("Could not retrieve the query result", err)
-		writer.WriteHeader(http.StatusInternalServerError)
-		return
+		return errors.New("Could not retrieve your tasks")
 	}
 
-	writer.WriteHeader(http.StatusOK)
-	json.NewEncoder(writer).Encode(allTasks)
+	connection.Status(fiber.StatusOK).JSON(allTasks)
+
+	return nil
 }
 
-func EditTaskService(writer http.ResponseWriter, request *http.Request, bodyBytes []byte) {
+func EditTaskService(connection *fiber.Ctx) error {
 
 	var tokenString string
 
@@ -212,32 +165,26 @@ func EditTaskService(writer http.ResponseWriter, request *http.Request, bodyByte
 
 	var task models.Task
 
-	taskCode, err := strconv.ParseInt(mux.Vars(request)["code"], 10, 64)
+	taskCode, err := connection.ParamsInt("code")
 
-	var errorResponse utils.GenericResponse
+	var response utils.GenericResponse
 
-	var reader = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
+	var reader = ioutil.NopCloser(bytes.NewBuffer(connection.Body()))
 
-	if err != nil {
-		log.Print("The received code is not valid")
-		writer.WriteHeader(http.StatusBadRequest)
-		return
+	if taskCode == 0 || err != nil {
+
+		response.Response = "The received parameter is not valid"
+		connection.Status(fiber.StatusBadRequest).JSON(response)
 	}
 
-	tokenString, err = auth.GetCookieValue(request, "access-token")
-
-	if err != nil {
-		log.Print("Could not retrieve the access token")
-		writer.WriteHeader(http.StatusInternalServerError)
-		return
-	}
+	tokenString = connection.Cookies("access-token")
 
 	userEmail, err = auth.EmailFromToken(tokenString)
 
 	if err != nil {
-		log.Print("The token does not contain the user email")
-		writer.WriteHeader(http.StatusBadRequest)
-		return
+
+		return errors.New("Could not get the user's email from the token")
+
 	}
 
 	decoder := json.NewDecoder(reader)
@@ -245,9 +192,8 @@ func EditTaskService(writer http.ResponseWriter, request *http.Request, bodyByte
 	err = decoder.Decode(&task)
 
 	if err != nil {
-		log.Print("Could not decode incoming request ", err)
-		writer.WriteHeader(http.StatusBadRequest)
-		return
+		response.Response = "The task is malformed"
+		connection.Status(fiber.StatusBadRequest).JSON(response)
 	}
 
 	task.UserEmail = &userEmail
@@ -264,50 +210,38 @@ func EditTaskService(writer http.ResponseWriter, request *http.Request, bodyByte
 	)
 
 	if err != nil {
-		log.Print("Could not update a task ", err)
-		writer.WriteHeader(http.StatusBadRequest)
-		errorResponse.Response = "Could not update the task"
-
-		json.NewEncoder(writer).Encode(errorResponse)
-		return
+		return errors.New("Could not edit the task, try again later")
 	}
 
-	writer.WriteHeader(http.StatusAccepted)
-	json.NewEncoder(writer).Encode(task)
+	connection.Status(fiber.StatusAccepted).JSON(task)
+
+	return nil
 
 }
 
-func DeleteTaskService(writer http.ResponseWriter, request *http.Request, bodyBytes []byte) {
+func DeleteTaskService(connection *fiber.Ctx) error {
 	var tokenString string
 
 	var userEmail string
 
 	var task models.Task
 
-	taskCode, err := strconv.ParseInt(mux.Vars(request)["code"], 10, 64)
+	taskCode, err := connection.ParamsInt("code")
 
-	var errorResponse utils.GenericResponse
+	var response utils.GenericResponse
 
-	if err != nil {
-		log.Print("The received code is not valid")
-		writer.WriteHeader(http.StatusBadRequest)
-		return
+	if taskCode == 0 || err != nil {
+		response.Response = "The received parameter is not valid"
+		connection.Status(fiber.StatusBadRequest).JSON(response)
+		return nil
 	}
 
-	tokenString, err = auth.GetCookieValue(request, "access-token")
-
-	if err != nil {
-		log.Print("Could not retrieve the access token")
-		writer.WriteHeader(http.StatusInternalServerError)
-		return
-	}
+	tokenString = connection.Cookies("access-token")
 
 	userEmail, err = auth.EmailFromToken(tokenString)
 
 	if err != nil {
-		log.Print("The token does not contain the user email")
-		writer.WriteHeader(http.StatusBadRequest)
-		return
+		return errors.New("Could not delete the task, try again later")
 	}
 
 	task.UserEmail = &userEmail
@@ -319,27 +253,15 @@ func DeleteTaskService(writer http.ResponseWriter, request *http.Request, bodyBy
 	result, err := database.DeleteTaskStatement.Exec(task.Code, task.UserEmail)
 
 	if err != nil {
-		log.Print("Could not delete a task ", err)
-		writer.WriteHeader(http.StatusNotFound)
-
-		errorResponse.Response = "Task not found or you have no access to it"
-
-		json.NewEncoder(writer).Encode(errorResponse)
-		return
+		return errors.New("Could not delete the task, try again later")
 	}
 
 	affectedRows, err := result.RowsAffected()
 
 	if err != nil || affectedRows == 0 {
-		log.Print("Could not delete a task ", err)
-		writer.WriteHeader(http.StatusNotFound)
-
-		errorResponse.Response = "Task not found or you have no access to it"
-
-		json.NewEncoder(writer).Encode(errorResponse)
-		return
+		return errors.New("Could not delete the task, try again later")
 	}
 
-	writer.WriteHeader(http.StatusOK)
-
+	connection.Status(fiber.StatusOK)
+	return nil
 }

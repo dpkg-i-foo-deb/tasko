@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"backend/app"
 	"backend/auth"
 	"backend/services"
 )
@@ -14,21 +15,30 @@ func InitTaskRoutes() {
 }
 
 func createTaskRoute() {
-	AddHandle("/tasks", auth.ValidateAndContinue(services.CreateTaskService), "PUT", "OPTIONS")
+
+	app.AddPut("/tasks", auth.ValidateAndContinue, services.CreateTaskService)
+
 }
 
 func getTaskRoute() {
-	AddHandle("/tasks/{code}", auth.ValidateAndContinue(services.GetTaskService), "GET", "OPTIONS")
+
+	app.AddGet("/tasks/:code", auth.ValidateAndContinue, services.GetTaskService)
+
 }
 
 func getAllTasksRoute() {
-	AddHandle("/tasks", auth.ValidateAndContinue(services.GetAllTasksService), "GET", "OPTIONS")
+
+	app.AddGet("/tasks", auth.ValidateAndContinue, services.GetAllTasksService)
 }
 
 func editTaskRoute() {
-	AddHandle("/tasks/{code}", auth.ValidateAndContinue(services.EditTaskService), "PATCH", "OPTIONS")
+
+	app.AddPatch("/tasks/:code", auth.ValidateAndContinue, services.EditTaskService)
+
 }
 
 func deleteTaskRoute() {
-	AddHandle("/tasks/{code}", auth.ValidateAndContinue(services.DeleteTaskService), "DELETE", "OPTIONS")
+
+	app.AddDelete("/tasks/:code", auth.ValidateAndContinue, services.DeleteTaskService)
+
 }

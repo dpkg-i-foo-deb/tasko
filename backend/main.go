@@ -1,14 +1,11 @@
 package main
 
 import (
+	"backend/app"
 	"backend/database"
 	"backend/routes"
-	"fmt"
-	"log"
-	"net/http"
-	"os"
-
 	"github.com/joho/godotenv"
+	"log"
 )
 
 func initQueries() {
@@ -30,24 +27,19 @@ func initEnvironment() {
 }
 
 func initRoutes() {
+
 	routes.InitIndexRoutes()
 	routes.InitUserRoutes()
 	routes.InitTaskRoutes()
 }
 
-func startServer() {
-
-	fmt.Print("Server is running on port" + os.Getenv("SERVER_PORT") + "\n")
-	log.Fatal(http.ListenAndServe(os.Getenv("SERVER_PORT"), routes.Router))
-}
-
 func main() {
 
 	initEnvironment()
-	routes.InitRouter()
+	app.InitApp()
 	database.InitDatabase()
 	initQueries()
 	initRoutes()
-	startServer()
+	app.StartApp()
 
 }
